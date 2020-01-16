@@ -3,8 +3,8 @@ server:
 eureka:
   client:
     # 注册自身到eureka服务器 集群时开启
-    register-with-eureka: true
-    fetch-registry: true
+    register-with-eureka: false
+    fetch-registry: false
     #集群时开启
     #serviceUrl:
      # defaultZone: http://localhost:10001/eureka, http://localhost:10002/eureka
