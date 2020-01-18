@@ -10,6 +10,8 @@
     <modules>
         <module>LX-eureka</module>
         <module>LX-gateway</module>
+        <module>dept-test</module>
+        <module>dept-api</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -32,6 +34,7 @@
         <pageHelper.starter.version>1.2.5</pageHelper.starter.version>
         <fastDFS.client.version>1.26.1-RELEASE</fastDFS.client.version>
         <swagger2.version>2.6.1</swagger2.version>
+        <epsilon.lx.version>1.0-SNAPSHOT</epsilon.lx.version>
     </properties>
 
     <dependencyManagement>
