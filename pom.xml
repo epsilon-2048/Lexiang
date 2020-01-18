@@ -12,6 +12,7 @@
         <module>LX-gateway</module>
         <module>dept-test</module>
         <module>dept-api</module>
+        <module>dept-feign</module>
     </modules>
 
     <packaging>pom</packaging>
