@@ -1,7 +1,7 @@
 package com.epsilon.lx.controller;
 
 import com.epsilon.lx.entities.Dept;
-import com.epsilon.lx.service.DeptService;
+import com.epsilon.lx.service.DeptClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,7 @@ import java.util.List;
 public class DeptController_Consumer {
 
     @Autowired
-    private DeptService service;
+    private DeptClientService service;
 
     @RequestMapping(value = "/consumer/dept/add", method = RequestMethod.POST)
     public boolean add(Dept dept){
@@ -33,7 +33,7 @@ public class DeptController_Consumer {
         return service.deptList();
     }
 
-    @RequestMapping(value = "/consumer/dev/get", method = RequestMethod.GET)
+        @RequestMapping(value = "/consumer/dev/get", method = RequestMethod.GET)
     public String getDev() {
         return service.getDev();
     }

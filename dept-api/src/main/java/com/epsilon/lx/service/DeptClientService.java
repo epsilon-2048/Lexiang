@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @FeignClient(value = "DEPT-TEST")
-public interface DeptService {
-
+@RequestMapping("/dept")
+public interface DeptClientService {
+/*
 
     @RequestMapping(value = "/dept/add",method = RequestMethod.POST)
     public boolean add(@RequestBody Dept dept);
@@ -23,5 +24,5 @@ public interface DeptService {
     public List<Dept> deptList();
 
     @RequestMapping(value = "/dev/get", method = RequestMethod.GET)
-    public String getDev();
+    public String getDev();*/
 }

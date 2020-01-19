@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController //Controller与ResponseBody的结合体
 @Api
+@RequestMapping("/dept")
 public class DeptController {
 
     @Autowired
@@ -24,21 +25,21 @@ public class DeptController {
 
     @ApiOperation(value="新增部门", notes="已测试")
     @ApiImplicitParam(name = "dept", value = "部门实体", required = true, dataType = "Dept")
-    @RequestMapping(value = "/dept/add",method = RequestMethod.POST)
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
     public boolean add(@RequestBody Dept dept){
         return deptService.add(dept);
     }
 
     @ApiOperation(value="新增部门", notes="已测试")
     @ApiImplicitParam(name = "id", value = "部门实体", required = true, dataType = "Long")
-    @RequestMapping(value = "/dept/get/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     public Dept get(@PathVariable("id") Long id){
-        System.out.println(8003);
+       // System.out.println(8003);
         return deptService.getDept(id);
     }
 
     @ApiOperation(value="获取部门列表", notes="已测试")
-    @RequestMapping(value = "/dept/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<Dept> deptList(){
         return deptService.DeptList();
     }
