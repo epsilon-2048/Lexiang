@@ -1,5 +1,6 @@
 package com.epsilon.lx.controller;
 
+import com.epsilon.lx.entities.BaseUser;
 import com.epsilon.lx.entities.Dept;
 import com.epsilon.lx.service.DeptService;
 import io.swagger.annotations.Api;
@@ -7,6 +8,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,7 +49,9 @@ public class DeptController {
 
     @ApiOperation(value="获取来自哪个实例", notes="已测试")
     @RequestMapping(value = "/dev/get", method = RequestMethod.GET)
-    public String getDev(){
-        return dev;
+    public String getDev(@AuthenticationPrincipal UserDetails user){
+        if (user != null)
+            return dev +" id: "+((BaseUser)user).getId();
+        else return dev;
     }
 }

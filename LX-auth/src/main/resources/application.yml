@@ -1,8 +1,8 @@
 spring:
   application:
-    name: dept-test # 应用名称，会在Eureka中显示
-  profiles:
-    active: dev2 #启动服务时，服务器会自动加载的配置文件
+    name: LX-auth # 应用名称，会在Eureka中显示
+  #profiles:
+    #active: dev #启动服务时，服务器会自动加载的配置文件
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://49.235.122.86:3306/Lexiang?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
@@ -34,16 +34,18 @@ spring:
     store-type: redis
     # 用本机内存存取session
     # store-type: none
+
 eureka:
   instance:
     prefer-ip-address: true # 当调用getHostname获取实例的hostname时，返回ip而不是host名称
     #    ip-address: 127.0.0.1 # 指定自己的ip信息，不指定的话会自己寻找
     instance-id: ${spring.application.name}:${server.port} # DESKTOP-2MVEC12:user-service:8081：是示例的名称，instance-id是区分同一服务的不同实例的唯一标准，因此不能重复
+    # 登陆页面
+    status-page-url.: http://localhost:${server.port}/demo-signIn.html
   client:
     service-url:
       defaultZone: http://127.0.0.1:10000/eureka/, http://127.0.0.1:10001/eureka/, http://127.0.0.1:10002/eureka/
-
-  # Spring Cloud Feign 支持对请求和响应进行GZIP压缩，以减少通信过程中的性能损耗。通过下面的参数即可开启请求与响应的压缩功能
+ # Spring Cloud Feign 支持对请求和响应进行GZIP压缩，以减少通信过程中的性能损耗。通过下面的参数即可开启请求与响应的压缩功能
   # 使用文件比较大时，如下载文件
   compression:
     request:
@@ -96,11 +98,13 @@ server:
   session:
     #单位秒，最低一分钟
     timeout: 120
+  port: 10200  #认证服务端口
 
 # basic验证暂时关掉
 security:
   basic:
-    enabled: false
+   enabled: false
+
 
 epsilon:
   security:
@@ -140,6 +144,6 @@ epsilon:
         # 要验证码验证的url:请求方式，":"分隔请求方式, ","分隔多个需验证地址，","之间不要有空格
         #url: /user:post,/user/*:get
     #不需做登陆验证的url，","分隔，","之间不要有空格
-    permitUrls: /user/register,/dept/list
+    permitUrls: /user/register
     # 启动是自动建认证所必须的表，如果数据据已有，设置为false
     autoCreateTable: false

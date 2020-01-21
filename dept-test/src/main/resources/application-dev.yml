@@ -14,7 +14,7 @@ eureka:
     lease-renewal-interval-in-seconds: 5
     # 服务失效时间，默认值90秒
     lease-expiration-duration-in-seconds: 10
-    # swagger2页面
+    # swagger2页面demo-signIn.html
     status-page-url.: http://localhost:${server.port}/swagger-ui.html
     # 上传服务器后显示域名
 #    ip-address: 26

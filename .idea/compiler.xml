@@ -9,9 +9,13 @@
         <module name="dept-api" />
         <module name="dept-feign" />
         <module name="dept-test" />
+        <module name="LX-auth" />
         <module name="LX-eureka" />
         <module name="LX-gateway" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="LX-auth-api" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
