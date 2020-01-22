@@ -7,7 +7,7 @@
 <body>
     <h1>自定义登陆页面</h1>
     <h3>表单登陆</h3>
-<form action="/authentication/form" method="post">
+<form action="./authentication/form" method="post">
     <table>
         <tr>
             <td>用户名:</td>
@@ -21,7 +21,8 @@
             <td>图片验证码：</td>
             <td>
                 <input type="text" name="imageCode"/>
-                <img src="/code/image?width=90">
+                <img src="./code/image?width=90">
+                <!--加/从根目录定位，不加从当前目录定位，同./-->
             </td>
         </tr>
         <tr>
@@ -43,7 +44,7 @@
                 <td>短信验证码:</td>
                 <td>
                     <input type="text" name="smsCode">
-                    <a href="/code/sms?phone=13012345678">获取验证码</a>
+                    <a href="./code/sms?phone=13012345678">获取验证码</a>
                 </td>
             </tr>
             <tr>
@@ -51,6 +52,6 @@
             </tr>
         </table>
     </form>
-    <a href="demo-register.html">前往注册</a>
+    <a href="./demo-register.html">前往注册</a>
 </body>
 </html>

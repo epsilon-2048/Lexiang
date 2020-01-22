@@ -10,6 +10,7 @@
         <module name="dept-feign" />
         <module name="dept-test" />
         <module name="LX-auth" />
+        <module name="LX-common" />
         <module name="LX-eureka" />
         <module name="LX-gateway" />
       </profile>

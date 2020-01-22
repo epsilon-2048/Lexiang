@@ -34,6 +34,6 @@ public class UserController {
 								   @RequestParam("password") String password) {
 		String[] strings = {"Spectator"};
 		userDetailService.addUser(username,password,strings);
-		return new SimpleResponse("访问的服务器需要身份认证，请引导用户到登录页");
+		return new SimpleResponse("注册成功");
 	}
 }

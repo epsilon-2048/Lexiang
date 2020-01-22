@@ -81,9 +81,7 @@ public class MyUserDetailService implements UserDetailsService {
                     AuthorityUtils.commaSeparatedStringToAuthorityList(roles.get(0).getRoles()));
             return user.get(0);
         } else {
-            return new User(username, "",
-                    true, true,true,true,
-                    null);
+            throw new UsernameNotFoundException("用户名不存在");
         }
 
 

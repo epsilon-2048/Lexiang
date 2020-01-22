@@ -26,7 +26,7 @@ zuul:
       #忽视前缀：api
       strip-prefix: false
     auth:
-      path: /auth/**
+      path: /**  #因为使用这个式子会匹配全部，所以必须放在最后。ant的路由存储由linkedHashMap实现，取最先匹配到的
       serviceId: LX-AUTH
       strip-prefix: false
       # xxx:8080/api/auth/demo-signIn.html

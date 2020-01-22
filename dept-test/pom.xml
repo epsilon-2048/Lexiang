@@ -21,9 +21,14 @@
 
         <dependency>
             <groupId>com.epsilon.Lexiang</groupId>
+            <artifactId>LX-common</artifactId>
+            <version>${epsilon.lx.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.epsilon.Lexiang</groupId>
             <artifactId>dept-api</artifactId>
             <version>${epsilon.lx.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -62,7 +67,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -96,11 +100,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zipkin</artifactId>
         </dependency>
 
         <!-- swagger2 依赖 -->

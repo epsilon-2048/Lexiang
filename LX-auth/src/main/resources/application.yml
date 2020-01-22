@@ -110,10 +110,10 @@ epsilon:
   security:
     browser:
       # 自定义登录页
-      loginPage: /auth/demo-signIn.html
-      logoutUrl: /auth/signout.html
+      loginPage: /demo-signIn.html
+      logoutUrl: /signout.html
       # 自定义注册页
-      registerPage: /auth/demo-register.html
+      registerPage: /demo-register.html
       # 自定义返回方式 JSON | REDIRECT
       loginResponseType: JSON
       # 记住我过期时间
