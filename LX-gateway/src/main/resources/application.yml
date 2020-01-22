@@ -55,7 +55,7 @@ logging:
     com.ep: debug
 # 参数计算重试的次数：MaxAutoRetries+MaxAutoRetriesNextServer+(MaxAutoRetries *MaxAutoRetriesNextServer) 即重试3次 则一共产生4次调用
 ribbon:
-  ConnectTimeout: 1000 # 连接超时时间(ms)
-  ReadTimeout: 2000 # 通信超时时间(ms)
+  ConnectTimeout: 2000 # 连接超时时间(ms)
+  ReadTimeout: 4000 # 通信超时时间(ms)
   MaxAutoRetriesNextServer: 1 # 同一服务不同实例的重试次数，不包括首次调用
   MaxAutoRetries: 1 # 同一实例的重试次数，不包括首次调用
