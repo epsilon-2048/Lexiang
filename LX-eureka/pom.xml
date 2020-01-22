@@ -13,6 +13,11 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>com.epsilon.Lexiang</groupId>
+            <artifactId>LX-common</artifactId>
+            <version>${LX.version}</version>
+        </dependency>
         <!--Greenwich.SR2-->
 <!--        <dependency>
             <groupId>org.springframework.cloud</groupId>

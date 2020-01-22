@@ -17,6 +17,11 @@
             <groupId>epsilon-2048.security</groupId>
             <artifactId>epsilon-2048-security-browser</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.epsilon.Lexiang</groupId>
+            <artifactId>LX-common</artifactId>
+            <version>${LX.version}</version>
+        </dependency>
 
 
         <dependency>
