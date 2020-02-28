@@ -1,0 +1,70 @@
+spring:
+  application:
+    name: LX-gatway # 应用名称，会在Eureka中显示
+  profiles:
+    active: dev  #启动服务时，服务器会自动加载的配置文件
+
+eureka:
+  instance:
+    prefer-ip-address: true # 当调用getHostname获取实例的hostname时，返回ip而不是host名称
+    instance-id: ${spring.application.name}:${server.port} # DESKTOP-2MVEC12:user-service:8081：是示例的名称，instance-id是区分同一服务的不同实例的唯一标准，因此不能重复
+    ip-address: localhost # 指定自己的ip信息，不指定的话会自己寻找
+    status-page-url.: http://localhost:${server.port}/api/demo-signIn.html
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10000/eureka/, http://127.0.0.1:10001/eureka/, http://127.0.0.1:10002/eureka/
+
+zuul:
+  prefix: /api   # 路由前缀
+  ignored-services: "*"  # 多个， 忽略的应用，不暴露接口，即代理路径可用，真实路径不可以
+  #ignored-services: "microservicecloud-dept"  # 一个，不暴露接口，即代理路径可用，真实路径不可以
+  #即xxx:8080/api/dept/XXX 可用
+  #xxx:8080/api/DEPT-TEST/XXX 不可用
+
+  #路由分发，根据path映射url
+  routes:
+    #由eureka管理，映射到服务名，具体的实例由eureka提供（便于管理，因为一个服务可能有多个实例，负载均衡）
+    dept:
+      path: /dept/**
+      serviceId: DEPT-TEST
+      #忽视前缀：api
+      strip-prefix: false
+    upload:
+      path: /file/**
+      serviceId: LX-UPLOAD-FILE
+      #忽视前缀：api
+      strip-prefix: false
+    auth:
+      path: /**  #因为使用这个式子会匹配全部，所以必须放在最后。ant的路由存储由linkedHashMap实现，取最先匹配到的
+      serviceId: LX-AUTH
+      strip-prefix: false
+      # xxx:8080/api/auth/demo-signIn.html
+      # 跳转到: xxx:8081/auth/demo-signIn.html
+  #跨域
+  #需要忽略的头部信息，不在传播到其他服务
+  sensitive-headers: Access-Control-Allow-Origin
+  ignored-headers: Access-Control-Allow-Origin,H-APP-Id,Token,APPToken
+
+# Zuul中默认就已经集成了Ribbon负载均衡和Hystix熔断机制。但是所有的超时策略都是走的默认值，比如熔断超时时间只有1S，很容易就触发了。因此建议我们手动进行配置：
+# 设置全局Hystrix超时时间，Ribbon< hystrix, 因为ribbon重试没完，熔断了就麻烦了
+# 超时：(1 + MaxAutoRetries ）*（1+ MaxAutoRetriesNextServer) *（ReadTimeout +ConnectTimeout）
+hystrix:
+  command:
+    default:  # 默认全局
+      execution:
+        timeout:
+          enable: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 12000 # 设置hystrix的超时时间为6000ms，默认1000ms
+
+# `@FeignClient`注解修改的客户端在被代理时，都会创建一个新的Fegin.Logger实例。我们需要额外指定这个日志的级别才可以。
+logging:
+  level:
+    com.ep: debug
+# 参数计算重试的次数：MaxAutoRetries+MaxAutoRetriesNextServer+(MaxAutoRetries *MaxAutoRetriesNextServer) 即重试3次 则一共产生4次调用
+ribbon:
+  ConnectTimeout: 2000 # 连接超时时间(ms)
+  ReadTimeout: 4000 # 通信超时时间(ms)
+  MaxAutoRetriesNextServer: 1 # 同一服务不同实例的重试次数，不包括首次调用
+  MaxAutoRetries: 1 # 同一实例的重试次数，不包括首次调用

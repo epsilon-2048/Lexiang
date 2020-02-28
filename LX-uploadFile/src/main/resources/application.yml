@@ -1,0 +1,147 @@
+spring:
+  application:
+    name: LX-upload-file # 应用名称，会在Eureka中显示
+  profiles:
+    active: dev #启动服务时，服务器会自动加载的配置文件
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://49.235.122.86:3306/Lexiang?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: chen
+    initialSize: 5
+    minIdle: 5
+    maxWait: 60000
+    maxActive: 20
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+  redis:
+    # springboot版本为1.4RELEASE后中的RedisProperties配置文件类，从图中可知pool属性则被封装到了内部静态类Jedis和Lettuce中去了
+    jedis:
+      pool:
+        max-idle: 8  # 最大连接数
+        min-idle: 0  # 最小连接数
+        max-wait: -1  # 无限等待
+    timeout: 30000
+    database: 1
+    password: chen
+    port: 6379
+    host: 49.235.122.86
+
+  session:
+    # 用redis存取session
+    store-type: redis
+    # 用本机内存存取session
+    # store-type: none
+eureka:
+  instance:
+    prefer-ip-address: true # 当调用getHostname获取实例的hostname时，返回ip而不是host名称
+   # ip-address: localhost # 指定自己的ip信息，不指定的话会自己寻找
+    instance-id: ${spring.application.name}:${server.port} # DESKTOP-2MVEC12:user-service:8081：是示例的名称，instance-id是区分同一服务的不同实例的唯一标准，因此不能重复
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10000/eureka/, http://127.0.0.1:10001/eureka/, http://127.0.0.1:10002/eureka/
+
+  # Spring Cloud Feign 支持对请求和响应进行GZIP压缩，以减少通信过程中的性能损耗。通过下面的参数即可开启请求与响应的压缩功能
+  # 使用文件比较大时，如下载文件
+  compression:
+    request:
+      enabled: true   # 开启请求压缩，默认false
+      mime-types:  text/html,application/xml,application/json # 默认设置压缩的数据类型
+      min-request-size: 2048 # 默认设置触发压缩的大小下限
+    response:
+      enabled: true   # 开启响应压缩，默认false
+# `@FeignClient`注解修改的客户端在被代理时，都会创建一个新的Fegin.Logger实例。我们需要额外指定这个日志的级别才可以。
+logging:
+  level:
+    com.epsilon.lx: debug
+#新版配置，否则后面dashboard无法找到hystrix.stream
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+# 开启feign熔断，不然不能在Hystrix-dashoard
+#feign:
+#  hystrix:
+#    enabled: true
+#hystrix:
+#  command:
+#    default:  # 默认全局
+#      execution:
+#        timeout:
+#          enable: true
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 12000 # 设置hystrix的超时时间为6000ms，默认1000ms
+#ribbon:
+#  ConnectTimeout: 1000 # 连接超时时间(ms)
+#  ReadTimeout: 2000 # 通信超时时间(ms)
+#  MaxAutoRetriesNextServer: 1 # 同一服务不同实例的重试次数
+#  MaxAutoRetries: 1 # 同一实例的重试次数
+#mybatis:
+#  mapper-locations: classpath:mybatis/mapper/*.xml
+#  config-location: classpath:mybatis/mybatis.cfg.xml
+#  type-aliases-package: com.epsilon.lx.entities
+### pageHelper插件配置
+#pagehelper:
+#  helperDialect: mysql
+#  reasonable: true
+#  supportMethodsArguments: true
+#  params: count=countSql
+
+
+server:
+  session:
+    #单位秒，最低一分钟
+    timeout: 120
+
+# basic验证暂时关掉
+security:
+  basic:
+    enabled: false
+
+epsilon:
+  security:
+    browser:
+      # 自定义登录页
+      loginPage: /demo-signIn.html
+      logoutUrl: /signout.html
+      # 自定义注册页
+      registerPage: /demo-register.html
+      # 自定义返回方式 JSON | REDIRECT
+      loginResponseType: JSON
+      # 记住我过期时间
+      rememberMeSeconds: 60
+      # 一个用户最大同时登陆数 默认1
+      maximumSessions: 2
+      # 当超过最大登陆数时处理策略，true 不允许当前用户登陆， false （默认值）踢掉之前登陆的用户
+      maxSessionsPreventsLogin: false
+      session:
+        sessionInvalidUrl: /demo-signIn.html
+    code:
+      #图形验证码配置
+      image:
+        # 图形验证码数字个数
+        length: 5
+        #过期时间
+        expireIn: 65
+        # 宽度 此配置覆盖了默认配置，如果在页面请求地址中带有width参数，则将覆盖此配置
+        width: 50
+        # 高度 此配置覆盖了默认配置，如果在页面请求地址中带有height参数，则将覆盖此配置
+        height: 25
+        # 要验证码验证的url:请求方式，":"分隔请求方式, ","分隔多个需验证地址，","之间不要有空格
+        #url: /user:get,/user/*:*
+      #短信验证码配置
+      sms:
+        #验证码长度
+        length: 8
+        #过期时间
+        expireIn: 30
+        # 要验证码验证的url:请求方式，":"分隔请求方式, ","分隔多个需验证地址，","之间不要有空格
+        #url: /user:post,/user/*:get
+    #不需做登陆验证的url，","分隔，","之间不要有空格
+    permitUrls: /user/register
+    # 启动是自动建认证所必须的表，如果数据据已有，设置为false
+    autoCreateTable: false
