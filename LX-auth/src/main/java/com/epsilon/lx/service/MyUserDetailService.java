@@ -4,13 +4,14 @@ import com.epsilon.lx.entities.BaseUser;
 import com.epsilon.lx.entities.BaseUserExample;
 import com.epsilon.lx.entities.UserRole;
 import com.epsilon.lx.entities.UserRoleExample;
+import com.epsilon.lx.enums.ErrorCode;
+import com.epsilon.lx.exception.NotFoundException;
 import com.epsilon.lx.mapper.BaseUserMapper;
 import com.epsilon.lx.mapper.UserRoleMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -43,11 +44,17 @@ public class MyUserDetailService implements UserDetailsService {
     Logger logger = LoggerFactory.getLogger(getClass());
 
 
-    public Boolean addUser(String username, String password, String[] roles) {
+    public Boolean addUser(String username, String password, String[] roles) throws NotFoundException {
+
+        BaseUserExample userExample = new BaseUserExample();
+        BaseUserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andUsernameEqualTo(username);
+        List<BaseUser> user = userMapper.selectByExample(userExample);
         String roleStr ="";
         for (String tmprole : roles) {
             roleStr = tmprole + ",";
         }
+        if (user.size() > 0) throw new NotFoundException(ErrorCode.USER_ALREADY_EXIST,username);
         BaseUser baseUser = new BaseUser();
         baseUser.setPassword(passwordEncoder.encode(password));
         baseUser.setUsername(username);

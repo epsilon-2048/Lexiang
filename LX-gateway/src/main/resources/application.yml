@@ -9,6 +9,7 @@ eureka:
     prefer-ip-address: true # 当调用getHostname获取实例的hostname时，返回ip而不是host名称
     instance-id: ${spring.application.name}:${server.port} # DESKTOP-2MVEC12:user-service:8081：是示例的名称，instance-id是区分同一服务的不同实例的唯一标准，因此不能重复
     ip-address: localhost # 指定自己的ip信息，不指定的话会自己寻找
+    status-page-url.: http://localhost:${server.port}/api/demo-signIn.html
   client:
     service-url:
       defaultZone: http://127.0.0.1:10000/eureka/, http://127.0.0.1:10001/eureka/, http://127.0.0.1:10002/eureka/
@@ -17,12 +18,20 @@ zuul:
   prefix: /api   # 路由前缀
   ignored-services: "*"  # 多个， 忽略的应用，不暴露接口，即代理路径可用，真实路径不可以
   #ignored-services: "microservicecloud-dept"  # 一个，不暴露接口，即代理路径可用，真实路径不可以
+  #即xxx:8080/api/dept/XXX 可用
+  #xxx:8080/api/DEPT-TEST/XXX 不可用
+
   #路由分发，根据path映射url
   routes:
     #由eureka管理，映射到服务名，具体的实例由eureka提供（便于管理，因为一个服务可能有多个实例，负载均衡）
     dept:
       path: /dept/**
       serviceId: DEPT-TEST
+      #忽视前缀：api
+      strip-prefix: false
+    upload:
+      path: /file/**
+      serviceId: LX-UPLOAD-FILE
       #忽视前缀：api
       strip-prefix: false
     auth:

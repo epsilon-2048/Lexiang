@@ -39,6 +39,24 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage(), e);
         return new Result(e.getCode(), e.getMessage());
     }
+/*
+    @ExceptionHandler(value = FastDFS400Exception.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Result handleResourceFastDFSException(FastDFS400Exception e)
+    {
+        log.error(e.getMessage(), e);
+        return new Result(e.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(value = FastDFS500Exception.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Result handleResourceFastDFSException(FastDFS500Exception e)
+    {
+        log.error(e.getMessage(), e);
+        return new Result(e.getCode(), e.getMessage());
+    }*/
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
@@ -48,7 +66,4 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage(), e);
         return new Result(ErrorCode.ERROR.getCode(), ErrorCode.ERROR.getMsg());
     }
-
-
-
 }

@@ -15,6 +15,9 @@
         <module>dept-feign</module>
         <module>LX-auth</module>
         <module>LX-common</module>
+        <module>LX-uploadFile</module>
+        <module>LX-uploadFile-api</module>
+        <module>LX-user</module>
     </modules>
 
     <packaging>pom</packaging>

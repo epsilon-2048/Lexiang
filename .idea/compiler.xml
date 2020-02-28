@@ -13,6 +13,9 @@
         <module name="LX-common" />
         <module name="LX-eureka" />
         <module name="LX-gateway" />
+        <module name="LX-uploadFile" />
+        <module name="LX-uploadFile-api" />
+        <module name="LX-user" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

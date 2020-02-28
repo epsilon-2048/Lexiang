@@ -41,7 +41,7 @@ eureka:
     #    ip-address: 127.0.0.1 # 指定自己的ip信息，不指定的话会自己寻找
     instance-id: ${spring.application.name}:${server.port} # DESKTOP-2MVEC12:user-service:8081：是示例的名称，instance-id是区分同一服务的不同实例的唯一标准，因此不能重复
     # 登陆页面
-    status-page-url.: http://localhost:${server.port}/demo-signIn.html
+    status-page-url.: http://localhost:${server.port}/swagger-ui.html
   client:
     service-url:
       defaultZone: http://127.0.0.1:10000/eureka/, http://127.0.0.1:10001/eureka/, http://127.0.0.1:10002/eureka/
@@ -109,6 +109,7 @@ security:
 epsilon:
   security:
     browser:
+#      epsilon.security.browser.session.sessionInvalidUrl
       # 自定义登录页
       loginPage: /demo-signIn.html
       logoutUrl: /signout.html
@@ -122,6 +123,8 @@ epsilon:
       maximumSessions: 2
       # 当超过最大登陆数时处理策略，true 不允许当前用户登陆， false （默认值）踢掉之前登陆的用户
       maxSessionsPreventsLogin: false
+      session:
+        sessionInvalidUrl: /demo-signIn.html
     code:
       #图形验证码配置
       image:

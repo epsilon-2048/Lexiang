@@ -1,6 +1,6 @@
 spring:
   application:
-    name: dept-test # 应用名称，会在Eureka中显示
+    name: LX-upload-file # 应用名称，会在Eureka中显示
   profiles:
     active: dev #启动服务时，服务器会自动加载的配置文件
   datasource:
@@ -80,10 +80,10 @@ management:
 #  ReadTimeout: 2000 # 通信超时时间(ms)
 #  MaxAutoRetriesNextServer: 1 # 同一服务不同实例的重试次数
 #  MaxAutoRetries: 1 # 同一实例的重试次数
-mybatis:
-  mapper-locations: classpath:mybatis/mapper/*.xml
-  config-location: classpath:mybatis/mybatis.cfg.xml
-  type-aliases-package: com.epsilon.lx.entities
+#mybatis:
+#  mapper-locations: classpath:mybatis/mapper/*.xml
+#  config-location: classpath:mybatis/mybatis.cfg.xml
+#  type-aliases-package: com.epsilon.lx.entities
 ### pageHelper插件配置
 #pagehelper:
 #  helperDialect: mysql
@@ -118,6 +118,8 @@ epsilon:
       maximumSessions: 2
       # 当超过最大登陆数时处理策略，true 不允许当前用户登陆， false （默认值）踢掉之前登陆的用户
       maxSessionsPreventsLogin: false
+      session:
+        sessionInvalidUrl: /demo-signIn.html
     code:
       #图形验证码配置
       image:
@@ -140,6 +142,6 @@ epsilon:
         # 要验证码验证的url:请求方式，":"分隔请求方式, ","分隔多个需验证地址，","之间不要有空格
         #url: /user:post,/user/*:get
     #不需做登陆验证的url，","分隔，","之间不要有空格
-    permitUrls: /user/register,/dept/list
+    permitUrls: /user/register
     # 启动是自动建认证所必须的表，如果数据据已有，设置为false
     autoCreateTable: false

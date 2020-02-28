@@ -1,6 +1,7 @@
 HELP.md
 /target/
 *.idea
+/**/target
 *.rebel.xml
 *.rebel-remote.xml
 *.iml

@@ -3,6 +3,7 @@ package com.epsilon.lx.controller;
 import com.epsilon.lx.entities.BaseUser;
 import com.epsilon.lx.entities.Dept;
 import com.epsilon.lx.enums.ErrorCode;
+import com.epsilon.lx.exception.InternalServerErrorException;
 import com.epsilon.lx.exception.NotFoundException;
 import com.epsilon.lx.service.DeptService;
 import io.swagger.annotations.Api;
@@ -64,9 +65,16 @@ public class DeptController {
     }
 
     @ApiOperation(value="测试抛出异常", notes="已测试")
-    @RequestMapping(value = "/dev/ex/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/dev/ex404/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public String getEx(@PathVariable("id") int id) throws Exception {
+    public String getEx404(@PathVariable("id") int id) throws Exception {
         throw new NotFoundException(ErrorCode.USER_NOT_FOUND, String.valueOf(id));
+    }
+
+    @ApiOperation(value="测试抛出异常", notes="已测试")
+    @RequestMapping(value = "/dev/ex505/{id}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public String getEx500(@PathVariable("id") int id) throws Exception {
+        throw new InternalServerErrorException(ErrorCode.FILE_UPLOAD_FAILED, String.valueOf(id));
     }
 }
