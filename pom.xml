@@ -18,6 +18,9 @@
         <module>LX-uploadFile</module>
         <module>LX-uploadFile-api</module>
         <module>LX-user</module>
+        <module>LX-video</module>
+        <module>LX-video-api</module>
+        <module>LX-auth-api</module>
     </modules>
 
     <packaging>pom</packaging>

@@ -14,9 +14,9 @@ public enum  ErrorCode implements ICodeEnum {
     USER_ALREADY_EXIST(40402,"用户 %s 已存在"),
 
     /**
-     * 电影不存在
+     * 视频不存在
      */
-    MOVIE_NOT_FOUND(40410,"电影 %s 不存在"),
+    VIDEO_NOT_FOUND(40410,"视频 %s 不存在"),
 
     FILE_NOT_EXIST(40420, "文件不存在"),
 

@@ -2,9 +2,8 @@ package com.epsilon.lx.controller;
 
 import com.epsilon.lx.exception.InternalServerErrorException;
 import com.epsilon.lx.exception.NotFoundException;
-import com.epsilon.lx.service.UploadService;
+import com.epsilon.lx.service.IUploadService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadController {
 
     @Autowired
-    private UploadService uploadService;
+    private IUploadService uploadService;
 
-    @ApiOperation(value="新增部门", notes="已测试")
+    @ApiOperation(value="上传", notes="已测试")
     @RequestMapping(value = "/upload",method = RequestMethod.POST, headers = "content-type=multipart/form-data")
     @ResponseStatus(HttpStatus.CREATED)
     public String upload(@RequestParam("file")MultipartFile multipartFile) throws InternalServerErrorException, NotFoundException {

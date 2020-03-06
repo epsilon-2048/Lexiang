@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.epsilon.lx.mapper.VideoMapper" >
+  <resultMap id="BaseResultMap" type="com.epsilon.lx.entities.Video" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="country_id" property="countryId" jdbcType="BIGINT" />
+    <result column="release_time" property="releaseTime" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type_id" property="typeId" jdbcType="BIGINT" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="likes" property="likes" jdbcType="BIGINT" />
+    <result column="follows" property="follows" jdbcType="BIGINT" />
+    <result column="views" property="views" jdbcType="BIGINT" />
+    <result column="search_count" property="searchCount" jdbcType="BIGINT" />
+    <result column="free" property="free" jdbcType="CHAR" />
+    <result column="director" property="director" jdbcType="VARCHAR" />
+    <result column="actors" property="actors" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="picture" property="picture" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, country_id, release_time, name, type_id, category_id, intro, likes, follows, 
+    views, search_count, free, director, actors, price, picture
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.epsilon.lx.entities.VideoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="offset != null &amp;&amp; limit != null &amp;&amp; limit != 0">
+      limit ${offset},${limit}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from video
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from video
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.epsilon.lx.entities.VideoExample" >
+    delete from video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.epsilon.lx.entities.Video" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into video (country_id, release_time, name, 
+      type_id, category_id, intro, 
+      likes, follows, views, 
+      search_count, free, director, 
+      actors, price, picture
+      )
+    values (#{countryId,jdbcType=BIGINT}, #{releaseTime,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, 
+      #{typeId,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{intro,jdbcType=VARCHAR}, 
+      #{likes,jdbcType=BIGINT}, #{follows,jdbcType=BIGINT}, #{views,jdbcType=BIGINT}, 
+      #{searchCount,jdbcType=BIGINT}, #{free,jdbcType=CHAR}, #{director,jdbcType=VARCHAR}, 
+      #{actors,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{picture,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.epsilon.lx.entities.Video" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="countryId != null" >
+        country_id,
+      </if>
+      <if test="releaseTime != null" >
+        release_time,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="typeId != null" >
+        type_id,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="intro != null" >
+        intro,
+      </if>
+      <if test="likes != null" >
+        likes,
+      </if>
+      <if test="follows != null" >
+        follows,
+      </if>
+      <if test="views != null" >
+        views,
+      </if>
+      <if test="searchCount != null" >
+        search_count,
+      </if>
+      <if test="free != null" >
+        free,
+      </if>
+      <if test="director != null" >
+        director,
+      </if>
+      <if test="actors != null" >
+        actors,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="picture != null" >
+        picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="countryId != null" >
+        #{countryId,jdbcType=BIGINT},
+      </if>
+      <if test="releaseTime != null" >
+        #{releaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="intro != null" >
+        #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="likes != null" >
+        #{likes,jdbcType=BIGINT},
+      </if>
+      <if test="follows != null" >
+        #{follows,jdbcType=BIGINT},
+      </if>
+      <if test="views != null" >
+        #{views,jdbcType=BIGINT},
+      </if>
+      <if test="searchCount != null" >
+        #{searchCount,jdbcType=BIGINT},
+      </if>
+      <if test="free != null" >
+        #{free,jdbcType=CHAR},
+      </if>
+      <if test="director != null" >
+        #{director,jdbcType=VARCHAR},
+      </if>
+      <if test="actors != null" >
+        #{actors,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="picture != null" >
+        #{picture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.epsilon.lx.entities.VideoExample" resultType="java.lang.Integer" >
+    select count(*) from video
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update video
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.countryId != null" >
+        country_id = #{record.countryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.releaseTime != null" >
+        release_time = #{record.releaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeId != null" >
+        type_id = #{record.typeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.categoryId != null" >
+        category_id = #{record.categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.intro != null" >
+        intro = #{record.intro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.likes != null" >
+        likes = #{record.likes,jdbcType=BIGINT},
+      </if>
+      <if test="record.follows != null" >
+        follows = #{record.follows,jdbcType=BIGINT},
+      </if>
+      <if test="record.views != null" >
+        views = #{record.views,jdbcType=BIGINT},
+      </if>
+      <if test="record.searchCount != null" >
+        search_count = #{record.searchCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.free != null" >
+        free = #{record.free,jdbcType=CHAR},
+      </if>
+      <if test="record.director != null" >
+        director = #{record.director,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actors != null" >
+        actors = #{record.actors,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.picture != null" >
+        picture = #{record.picture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update video
+    set id = #{record.id,jdbcType=BIGINT},
+      country_id = #{record.countryId,jdbcType=BIGINT},
+      release_time = #{record.releaseTime,jdbcType=TIMESTAMP},
+      name = #{record.name,jdbcType=VARCHAR},
+      type_id = #{record.typeId,jdbcType=BIGINT},
+      category_id = #{record.categoryId,jdbcType=BIGINT},
+      intro = #{record.intro,jdbcType=VARCHAR},
+      likes = #{record.likes,jdbcType=BIGINT},
+      follows = #{record.follows,jdbcType=BIGINT},
+      views = #{record.views,jdbcType=BIGINT},
+      search_count = #{record.searchCount,jdbcType=BIGINT},
+      free = #{record.free,jdbcType=CHAR},
+      director = #{record.director,jdbcType=VARCHAR},
+      actors = #{record.actors,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DECIMAL},
+      picture = #{record.picture,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.epsilon.lx.entities.Video" >
+    update video
+    <set >
+      <if test="countryId != null" >
+        country_id = #{countryId,jdbcType=BIGINT},
+      </if>
+      <if test="releaseTime != null" >
+        release_time = #{releaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        type_id = #{typeId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="intro != null" >
+        intro = #{intro,jdbcType=VARCHAR},
+      </if>
+      <if test="likes != null" >
+        likes = #{likes,jdbcType=BIGINT},
+      </if>
+      <if test="follows != null" >
+        follows = #{follows,jdbcType=BIGINT},
+      </if>
+      <if test="views != null" >
+        views = #{views,jdbcType=BIGINT},
+      </if>
+      <if test="searchCount != null" >
+        search_count = #{searchCount,jdbcType=BIGINT},
+      </if>
+      <if test="free != null" >
+        free = #{free,jdbcType=CHAR},
+      </if>
+      <if test="director != null" >
+        director = #{director,jdbcType=VARCHAR},
+      </if>
+      <if test="actors != null" >
+        actors = #{actors,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="picture != null" >
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.epsilon.lx.entities.Video" >
+    update video
+    set country_id = #{countryId,jdbcType=BIGINT},
+      release_time = #{releaseTime,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      type_id = #{typeId,jdbcType=BIGINT},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      intro = #{intro,jdbcType=VARCHAR},
+      likes = #{likes,jdbcType=BIGINT},
+      follows = #{follows,jdbcType=BIGINT},
+      views = #{views,jdbcType=BIGINT},
+      search_count = #{searchCount,jdbcType=BIGINT},
+      free = #{free,jdbcType=CHAR},
+      director = #{director,jdbcType=VARCHAR},
+      actors = #{actors,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      picture = #{picture,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

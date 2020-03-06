@@ -10,12 +10,15 @@
         <module name="dept-feign" />
         <module name="dept-test" />
         <module name="LX-auth" />
+        <module name="LX-auth-api" />
         <module name="LX-common" />
         <module name="LX-eureka" />
         <module name="LX-gateway" />
         <module name="LX-uploadFile" />
         <module name="LX-uploadFile-api" />
         <module name="LX-user" />
+        <module name="LX-video" />
+        <module name="LX-video-api" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

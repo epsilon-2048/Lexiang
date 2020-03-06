@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@RestController
+//@RestController
 @EnableEurekaClient
 @EnableSwagger2
 //@EnableFeignClients

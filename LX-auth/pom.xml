@@ -12,7 +12,6 @@
     <artifactId>LX-auth</artifactId>
 
     <dependencies>
-
         <dependency>
             <groupId>epsilon-2048.security</groupId>
             <artifactId>epsilon-2048-security-browser</artifactId>

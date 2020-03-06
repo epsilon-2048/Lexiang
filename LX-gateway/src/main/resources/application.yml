@@ -12,8 +12,7 @@ eureka:
     status-page-url.: http://localhost:${server.port}/api/demo-signIn.html
   client:
     service-url:
-      defaultZone: http://127.0.0.1:10000/eureka/, http://127.0.0.1:10001/eureka/, http://127.0.0.1:10002/eureka/
-
+      defaultZone: http://49.235.122.86:10001/eureka/, http://49.235.122.86:10000/eureka/, http://49.235.122.86:10002/eureka/
 zuul:
   prefix: /api   # 路由前缀
   ignored-services: "*"  # 多个， 忽略的应用，不暴露接口，即代理路径可用，真实路径不可以
@@ -33,6 +32,10 @@ zuul:
       path: /file/**
       serviceId: LX-UPLOAD-FILE
       #忽视前缀：api
+      strip-prefix: false
+    video:
+      path: /video/**
+      serviceId: LX-VIDEO
       strip-prefix: false
     auth:
       path: /**  #因为使用这个式子会匹配全部，所以必须放在最后。ant的路由存储由linkedHashMap实现，取最先匹配到的
