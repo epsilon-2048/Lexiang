@@ -17,6 +17,11 @@
 
         <dependency>
             <groupId>com.epsilon.Lexiang</groupId>
+            <artifactId>LX-user-api</artifactId>
+            <version>${epsilon.lx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.epsilon.Lexiang</groupId>
             <artifactId>LX-auth</artifactId>
             <version>${epsilon.lx.version}</version>
         </dependency>

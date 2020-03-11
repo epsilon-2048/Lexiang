@@ -44,7 +44,16 @@ public class IVideoServiceImpl implements IVideoService {
         insert(videoDTO);
         return videoDTO;
     }
-
+    /**
+     * 根据video更新
+     *
+     * @param video 影视对象
+     * @return
+     */
+    @Override
+    public boolean update(Video video) {
+        return videoMapper.updateByPrimaryKeySelective(video) > 0;
+    }
     /**
      * 批量上传影视
      *

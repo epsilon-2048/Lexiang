@@ -1,7 +1,6 @@
 package com.epsilon.lx.service.sort.impl;
 
 import com.epsilon.lx.entities.*;
-import com.epsilon.lx.mapper.ResourcePathMapper;
 import com.epsilon.lx.mapper.VideoMapper;
 import com.epsilon.lx.service.sort.IVideoSortService;
 import org.springframework.beans.factory.annotation.Autowired;

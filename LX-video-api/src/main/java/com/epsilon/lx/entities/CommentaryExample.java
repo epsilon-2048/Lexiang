@@ -1,6 +1,7 @@
 package com.epsilon.lx.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CommentaryExample {
@@ -541,6 +542,66 @@ public class CommentaryExample {
 
         public Criteria andTextNotBetween(String value1, String value2) {
             addCriterion("text not between", value1, value2, "text");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperationTimeIsNull() {
+            addCriterion("operation_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperationTimeIsNotNull() {
+            addCriterion("operation_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperationTimeEqualTo(Date value) {
+            addCriterion("operation_time =", value, "operationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperationTimeNotEqualTo(Date value) {
+            addCriterion("operation_time <>", value, "operationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperationTimeGreaterThan(Date value) {
+            addCriterion("operation_time >", value, "operationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperationTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("operation_time >=", value, "operationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperationTimeLessThan(Date value) {
+            addCriterion("operation_time <", value, "operationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperationTimeLessThanOrEqualTo(Date value) {
+            addCriterion("operation_time <=", value, "operationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperationTimeIn(List<Date> values) {
+            addCriterion("operation_time in", values, "operationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperationTimeNotIn(List<Date> values) {
+            addCriterion("operation_time not in", values, "operationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperationTimeBetween(Date value1, Date value2) {
+            addCriterion("operation_time between", value1, value2, "operationTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperationTimeNotBetween(Date value1, Date value2) {
+            addCriterion("operation_time not between", value1, value2, "operationTime");
             return (Criteria) this;
         }
     }

@@ -1,5 +1,7 @@
 package com.epsilon.lx.entities;
 
+import java.util.Date;
+
 public class Commentary {
     private Long id;
 
@@ -14,6 +16,8 @@ public class Commentary {
     private Long commentId;
 
     private String text;
+
+    private Date operationTime;
 
     public Long getId() {
         return id;
@@ -69,5 +73,13 @@ public class Commentary {
 
     public void setText(String text) {
         this.text = text == null ? null : text.trim();
+    }
+
+    public Date getOperationTime() {
+        return operationTime;
+    }
+
+    public void setOperationTime(Date operationTime) {
+        this.operationTime = operationTime;
     }
 }

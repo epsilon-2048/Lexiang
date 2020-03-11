@@ -21,6 +21,7 @@
         <module>LX-video</module>
         <module>LX-video-api</module>
         <module>LX-auth-api</module>
+        <module>LX-user-api</module>
     </modules>
 
     <packaging>pom</packaging>

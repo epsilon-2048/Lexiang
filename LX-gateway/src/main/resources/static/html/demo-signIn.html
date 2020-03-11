@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LX-影视平台</title>
+    <link rel="stylesheet" href="/layui/css/layui.css"/>
+    <script src="/layui/layui.js"></script>
+    <link rel="stylesheet" href="/css/login.css"/>
+    <link rel="stylesheet" href="/css/admin.css"/>
+    <script src="/js/jquery-2.1.4.min.js"></script>
+</head>
+<body class="layui-layout-body" >
+</form>
+    <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+
+        <div class="layadmin-user-login-main">
+            <div class="layadmin-user-login-box layadmin-user-login-header">
+                <h2>登陆</h2>
+                <p>陈少鑫 LX-影视平台</p>
+            </div>
+            <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>
+                    <input type="text" name="username" id="LAY-user-login-username" lay-verify="required" placeholder="用户名" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>
+                    <input type="password" name="password" id="LAY-user-login-password" lay-verify="required" placeholder="密码" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-row">
+                        <div class="layui-col-xs7">
+                            <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
+                            <input type="text" name="imageCode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
+                        </div>
+                        <div class="layui-col-xs5">
+                            <div style="margin-left: 10px;">
+                                <img src="http://localhost:10020/api/code/image?width=90" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode"
+                                     onclick="javascript:this.src='http://localhost:10020/api/code/image?width=90&rand='+Math.random();">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin-bottom: 20px;">
+                    <input type="checkbox" name="remember-me" lay-skin="primary" title="记住我"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>记住我</span><i class="layui-icon layui-icon-ok"></i></div>
+                    <!--<a lay-href="/user/forget" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>-->
+                    <a href="http://localhost:10020/html/demo-register.html" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">前往注册</a>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="LAY-user-login-submit">登 入</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-trans layadmin-user-login-footer">
+            <p>© 2020 <a href="#" target="_blank">陈少鑫</a></p>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    layui.use(['form'], function(){
+        var /*$$ = layui.$
+            ,setter = layui.setter
+            ,admin = layui.admin*/
+            form = layui.form
+            ,router = layui.router()
+            ,search = router.search;
+
+        form.render();
+
+        //提交
+        form.on('submit(LAY-user-login-submit)', function(obj){
+            var field = obj.field;
+           // console.log(field);
+            //请求接口
+            $.ajax({
+                url: '/api/authentication/form' //实际使用请改成服务端真实接口
+                ,data: field
+                ,type: "post"
+                ,success: function(res){
+                    layer.msg("欢迎您 "+ res.name, {
+                        offset: '15px'
+                        ,icon: 6
+                        ,time: 1000
+                    }, function(){
+                    //    location.href = '/api/html/demo-signIn.html'; //跳转到登入页
+                        var reUrl = document.referrer;
+                        var url = document.URL;
+                        if (reUrl.startsWith(url.split(":")[0])){
+                             if (reUrl.indexOf("/html/index.html") || reUrl.indexOf("/html/demo-signIn.html") ) {
+                                 window.location.href = "/html/index.html";
+                             } else {
+                                 window.location.href = reUrl;
+                             }
+                        } else {
+                            window.location.href = "/html/index.html";
+                        }
+                        //location.href = search.redirect ? decodeURIComponent(search.redirect) : '/html/index.html';
+                    });
+                }
+                ,error:function(XMLHttpRequest) {
+                    layer.msg(XMLHttpRequest.responseJSON.content, {
+                        offset: '15px'
+                        ,icon: 5
+                        ,time: 2000
+                    }, function(){});
+                }
+
+            });
+            return false;
+        });
+    });
+</script>
+</html>

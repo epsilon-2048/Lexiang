@@ -17,6 +17,7 @@
         <module name="LX-uploadFile" />
         <module name="LX-uploadFile-api" />
         <module name="LX-user" />
+        <module name="LX-user-api" />
         <module name="LX-video" />
         <module name="LX-video-api" />
       </profile>

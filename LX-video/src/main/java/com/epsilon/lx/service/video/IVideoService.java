@@ -19,6 +19,13 @@ public interface IVideoService {
     VideoDTO upload(VideoDTO videoDTO);
 
     /**
+     * 根据video更新
+     *
+     * @param video 影视对象
+     * @return
+     */
+    boolean update(Video video);
+    /**
      * 批量上传影视
      * @param videoDTOList 影视数据传输对象列表
      * @return

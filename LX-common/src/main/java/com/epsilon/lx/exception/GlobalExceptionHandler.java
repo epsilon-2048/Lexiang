@@ -21,7 +21,14 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage(), e);
         return new Result(e.getCode(), e.getMessage());
     }
-
+    @ExceptionHandler(value = NotAcceptableException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    public Result handleResourceNotAcceptableException(NotAcceptableException e)
+    {
+        log.error(e.getMessage(), e);
+        return new Result(e.getCode(), e.getMessage());
+    }
     @ExceptionHandler(value = InternalServerErrorException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

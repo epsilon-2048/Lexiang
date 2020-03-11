@@ -9,6 +9,7 @@
     <result column="grade" property="grade" jdbcType="CHAR" />
     <result column="comment_id" property="commentId" jdbcType="BIGINT" />
     <result column="text" property="text" jdbcType="VARCHAR" />
+    <result column="operation_time" property="operationTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, video_id, reviewer_id, respondent_id, grade, comment_id, text
+    id, video_id, reviewer_id, respondent_id, grade, comment_id, text, operation_time
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.epsilon.lx.entities.CommentaryExample" >
     select
@@ -106,9 +107,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into commentary (video_id, reviewer_id, respondent_id, 
-      grade, comment_id, text)
+      grade, comment_id, text, 
+      operation_time)
     values (#{videoId,jdbcType=BIGINT}, #{reviewerId,jdbcType=BIGINT}, #{respondentId,jdbcType=BIGINT}, 
-      #{grade,jdbcType=CHAR}, #{commentId,jdbcType=BIGINT}, #{text,jdbcType=VARCHAR})
+      #{grade,jdbcType=CHAR}, #{commentId,jdbcType=BIGINT}, #{text,jdbcType=VARCHAR}, 
+      #{operationTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.epsilon.lx.entities.Commentary" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -134,6 +137,9 @@
       <if test="text != null" >
         text,
       </if>
+      <if test="operationTime != null" >
+        operation_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="videoId != null" >
@@ -153,6 +159,9 @@
       </if>
       <if test="text != null" >
         #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="operationTime != null" >
+        #{operationTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -186,6 +195,9 @@
       <if test="record.text != null" >
         text = #{record.text,jdbcType=VARCHAR},
       </if>
+      <if test="record.operationTime != null" >
+        operation_time = #{record.operationTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -199,7 +211,8 @@
       respondent_id = #{record.respondentId,jdbcType=BIGINT},
       grade = #{record.grade,jdbcType=CHAR},
       comment_id = #{record.commentId,jdbcType=BIGINT},
-      text = #{record.text,jdbcType=VARCHAR}
+      text = #{record.text,jdbcType=VARCHAR},
+      operation_time = #{record.operationTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -225,6 +238,9 @@
       <if test="text != null" >
         text = #{text,jdbcType=VARCHAR},
       </if>
+      <if test="operationTime != null" >
+        operation_time = #{operationTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -235,7 +251,8 @@
       respondent_id = #{respondentId,jdbcType=BIGINT},
       grade = #{grade,jdbcType=CHAR},
       comment_id = #{commentId,jdbcType=BIGINT},
-      text = #{text,jdbcType=VARCHAR}
+      text = #{text,jdbcType=VARCHAR},
+      operation_time = #{operationTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

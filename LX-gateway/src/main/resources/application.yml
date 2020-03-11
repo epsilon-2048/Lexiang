@@ -9,7 +9,7 @@ eureka:
     prefer-ip-address: true # 当调用getHostname获取实例的hostname时，返回ip而不是host名称
     instance-id: ${spring.application.name}:${server.port} # DESKTOP-2MVEC12:user-service:8081：是示例的名称，instance-id是区分同一服务的不同实例的唯一标准，因此不能重复
     ip-address: localhost # 指定自己的ip信息，不指定的话会自己寻找
-    status-page-url.: http://localhost:${server.port}/api/demo-signIn.html
+    status-page-url.: http://localhost:${server.port}/html/demo-signIn.html
   client:
     service-url:
       defaultZone: http://49.235.122.86:10001/eureka/, http://49.235.122.86:10000/eureka/, http://49.235.122.86:10002/eureka/
@@ -34,8 +34,28 @@ zuul:
       #忽视前缀：api
       strip-prefix: false
     video:
-      path: /video/**
+      path: /videos/**
       serviceId: LX-VIDEO
+      strip-prefix: false
+    assort:
+      path: /assort/**
+      serviceId: LX-VIDEO
+      strip-prefix: false
+    comment:
+      path: /comment/**
+      serviceId: LX-VIDEO
+      strip-prefix: false
+    recommend:
+      path: /recommend/**
+      serviceId: LX-VIDEO
+      strip-prefix: false
+    sort:
+      path: /sort/**
+      serviceId: LX-VIDEO
+      strip-prefix: false
+    useroperation:
+      path: /operation/**
+      serviceId: LX-USER
       strip-prefix: false
     auth:
       path: /**  #因为使用这个式子会匹配全部，所以必须放在最后。ant的路由存储由linkedHashMap实现，取最先匹配到的

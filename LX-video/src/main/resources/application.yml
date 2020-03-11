@@ -104,21 +104,22 @@ security:
 epsilon:
   security:
     browser:
+      #      epsilon.security.browser.session.sessionInvalidUrl
       # 自定义登录页
-      loginPage: /demo-signIn.html
-      logoutUrl: /signout.html
+      loginPage: http://192.168.31.180:10020/html/demo-signIn.html
+      logoutUrl: http://192.168.31.180:10020/html/index.html
       # 自定义注册页
-      registerPage: /demo-register.html
+      registerPage: http://192.168.31.180:10020/html/demo-register.html
       # 自定义返回方式 JSON | REDIRECT
       loginResponseType: JSON
       # 记住我过期时间
-      rememberMeSeconds: 60
+      rememberMeSeconds: 172800
       # 一个用户最大同时登陆数 默认1
       maximumSessions: 2
       # 当超过最大登陆数时处理策略，true 不允许当前用户登陆， false （默认值）踢掉之前登陆的用户
       maxSessionsPreventsLogin: false
       session:
-        sessionInvalidUrl: /demo-signIn.html
+        sessionInvalidUrl: http://192.168.31.180:10020/html/demo-signIn.html
     code:
       #图形验证码配置
       image:
@@ -143,7 +144,7 @@ epsilon:
     #不需做登陆验证的url，","分隔，","之间不要有空格
     permitUrls: "/swagger-ui.html,/swagger-resources/**,/v2/api-docs,/assort/categories\
     ,/assort/countries,/assort/types,/comment/video/*,/recommend/videos/**,/sort/**\
-    ,/videos/*"
+    ,/videos/**"
 
     # 启动是自动建认证所必须的表，如果数据据已有，设置为false
     autoCreateTable: false

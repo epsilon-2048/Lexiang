@@ -11,14 +11,14 @@ public enum  ErrorCode implements ICodeEnum {
     /**
      * 用户已存在
      */
-    USER_ALREADY_EXIST(40402,"用户 %s 已存在"),
+    USER_ALREADY_EXIST(40610,"用户 %s 已存在"),
 
     /**
      * 视频不存在
      */
-    VIDEO_NOT_FOUND(40410,"视频 %s 不存在"),
+    VIDEO_NOT_FOUND(40611,"视频 %s 不存在"),
 
-    FILE_NOT_EXIST(40420, "文件不存在"),
+    FILE_NOT_EXIST(40612, "文件不存在"),
 
     ERROR(10000, "未知错误，请联系管理员"),
 

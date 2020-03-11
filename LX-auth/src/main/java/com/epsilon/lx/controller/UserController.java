@@ -3,6 +3,7 @@
  */
 package com.epsilon.lx.controller;
 
+import com.epsilon.lx.exception.NotAcceptableException;
 import com.epsilon.lx.exception.NotFoundException;
 import com.epsilon.lx.service.MyUserDetailService;
 import epsilon_2048.security.browser.support.SimpleResponse;
@@ -28,9 +29,9 @@ public class UserController {
 
     @PostMapping("/register")
     public SimpleResponse register(@RequestParam("username") String username,
-                                   @RequestParam("password") String password) throws NotFoundException {
+                                   @RequestParam("password") String password, @RequestParam(name = "imageCode", required=false) String imageCode) throws NotFoundException, NotAcceptableException {
         String[] strings = {"Spectator"};
-        userDetailService.addUser(username, password, strings);
+        userDetailService.addUser(username, password, strings, imageCode);
         return new SimpleResponse("注册成功");
     }
 }

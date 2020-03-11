@@ -5,6 +5,7 @@ import com.epsilon.lx.entities.BaseUserExample;
 import com.epsilon.lx.entities.UserRole;
 import com.epsilon.lx.entities.UserRoleExample;
 import com.epsilon.lx.enums.ErrorCode;
+import com.epsilon.lx.exception.NotAcceptableException;
 import com.epsilon.lx.exception.NotFoundException;
 import com.epsilon.lx.mapper.BaseUserMapper;
 import com.epsilon.lx.mapper.UserRoleMapper;
@@ -44,7 +45,7 @@ public class MyUserDetailService implements UserDetailsService {
     Logger logger = LoggerFactory.getLogger(getClass());
 
 
-    public Boolean addUser(String username, String password, String[] roles) throws NotFoundException {
+    public Boolean addUser(String username, String password, String[] roles,String imageCode) throws NotFoundException, NotAcceptableException {
 
         BaseUserExample userExample = new BaseUserExample();
         BaseUserExample.Criteria criteria = userExample.createCriteria();
@@ -54,7 +55,7 @@ public class MyUserDetailService implements UserDetailsService {
         for (String tmprole : roles) {
             roleStr = tmprole + ",";
         }
-        if (user.size() > 0) throw new NotFoundException(ErrorCode.USER_ALREADY_EXIST,username);
+        if (user.size() > 0) throw new NotAcceptableException(ErrorCode.USER_ALREADY_EXIST,username);
         BaseUser baseUser = new BaseUser();
         baseUser.setPassword(passwordEncoder.encode(password));
         baseUser.setUsername(username);
