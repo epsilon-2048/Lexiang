@@ -3,7 +3,19 @@ spring:
     name: LX-gatway # 应用名称，会在Eureka中显示
   profiles:
     active: dev  #启动服务时，服务器会自动加载的配置文件
-
+#  datasource:
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    url: jdbc:mysql://49.235.122.86:3306/Lexiang?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+#    username: root
+#    password: chen
+#    initialSize: 5
+#    minIdle: 5
+#    maxWait: 60000
+#    maxActive: 20
+#    timeBetweenEvictionRunsMillis: 60000
+#    minEvictableIdleTimeMillis: 300000
+#    poolPreparedStatements: true
+#    maxPoolPreparedStatementPerConnectionSize: 20
 eureka:
   instance:
     prefer-ip-address: true # 当调用getHostname获取实例的hostname时，返回ip而不是host名称
@@ -15,6 +27,7 @@ eureka:
       defaultZone: http://49.235.122.86:10001/eureka/, http://49.235.122.86:10000/eureka/, http://49.235.122.86:10002/eureka/
 zuul:
   prefix: /api   # 路由前缀
+  strip-prefix: true   #//过滤掉的是api true为过滤掉，默认为true 也可以在子中使用，在子中过滤子的前缀
   ignored-services: "*"  # 多个， 忽略的应用，不暴露接口，即代理路径可用，真实路径不可以
   #ignored-services: "microservicecloud-dept"  # 一个，不暴露接口，即代理路径可用，真实路径不可以
   #即xxx:8080/api/dept/XXX 可用
@@ -23,44 +36,65 @@ zuul:
   #路由分发，根据path映射url
   routes:
     #由eureka管理，映射到服务名，具体的实例由eureka提供（便于管理，因为一个服务可能有多个实例，负载均衡）
-    dept:
-      path: /dept/**
-      serviceId: DEPT-TEST
-      #忽视前缀：api
+#    code:
+#      path: /code/**
+#      serviceId: LX-AUTH
+#      strip-prefix: false  #//过滤掉的事code而不是api
+
+    useroperation:
+      path: /operation/user/*/type/*
+      serviceId: LX-USER
+      strip-prefix: false
+    url:
+      path: /**
+      serviceId: LX-AUTH
       strip-prefix: false
     upload:
-      path: /file/**
+      path: /file/upload
       serviceId: LX-UPLOAD-FILE
       #忽视前缀：api
       strip-prefix: false
-    video:
-      path: /videos/**
-      serviceId: LX-VIDEO
-      strip-prefix: false
-    assort:
-      path: /assort/**
-      serviceId: LX-VIDEO
-      strip-prefix: false
-    comment:
-      path: /comment/**
-      serviceId: LX-VIDEO
-      strip-prefix: false
-    recommend:
-      path: /recommend/**
-      serviceId: LX-VIDEO
-      strip-prefix: false
-    sort:
-      path: /sort/**
-      serviceId: LX-VIDEO
-      strip-prefix: false
-    useroperation:
-      path: /operation/**
-      serviceId: LX-USER
-      strip-prefix: false
-    auth:
-      path: /**  #因为使用这个式子会匹配全部，所以必须放在最后。ant的路由存储由linkedHashMap实现，取最先匹配到的
-      serviceId: LX-AUTH
-      strip-prefix: false
+#      path: /authentication/form
+#      serviceId: LX-AUTH
+#      strip-prefix: false
+#    logout:
+#      path: /logout
+#      serviceId: LX-AUTH
+#      strip-prefix: false
+#    dept:
+#      path: /dept/**
+#      serviceId: DEPT-TEST
+#      #忽视前缀：api :true
+#      strip-prefix: false
+#    upload:
+#      path: /file/**
+#      serviceId: LX-UPLOAD-FILE
+#      #忽视前缀：api
+#      strip-prefix: false
+#    video:
+#      path: /videos/**
+#      serviceId: LX-VIDEO
+#      strip-prefix: false
+#    assort:
+#      path: /assort/**
+#      serviceId: LX-VIDEO
+#      strip-prefix: false
+#    comment:
+#      path: /comment/**
+#      serviceId: LX-VIDEO
+#      strip-prefix: false
+#    recommend:
+#      path: /recommend/**
+#      serviceId: LX-VIDEO
+#      strip-prefix: false
+#    sort:
+#      path: /sort/**
+#      serviceId: LX-VIDEO
+#      strip-prefix: false
+#    useroperation:
+#      path: /operation/**
+#      serviceId: LX-USER
+#      strip-prefix: false
       # xxx:8080/api/auth/demo-signIn.html
       # 跳转到: xxx:8081/auth/demo-signIn.html
   #跨域

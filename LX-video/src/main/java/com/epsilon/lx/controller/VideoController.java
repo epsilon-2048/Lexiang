@@ -9,9 +9,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -82,7 +84,8 @@ public class VideoController {
     @ApiOperation(value = "通过videoID获取含视频资源的videoDTO列表")
     @ApiImplicitParam(name = "id", value = "视频id", required = true, paramType = "path", dataType = "Long")
     @ResponseStatus(HttpStatus.OK)
-    public VideoDTO getVideoNoUrlPathByVideoID(@PathVariable("id") Long id) throws NotFoundException {
+    public VideoDTO getVideoNoUrlPathByVideoID(@PathVariable("id") Long id, HttpServletRequest request) throws NotFoundException {
+        System.out.println(request.getRequestURL().toString());
         VideoDTO videoDTO = new VideoDTO();
         Video video = new Video();
         video.setId(id);

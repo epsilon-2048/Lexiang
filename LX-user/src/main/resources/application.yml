@@ -94,7 +94,7 @@ mybatis:
 server:
   session:
     #单位秒，最低一分钟
-    timeout: 120
+    timeout: 86400
 
 # basic验证暂时关掉
 security:
@@ -106,10 +106,10 @@ epsilon:
     browser:
       #      epsilon.security.browser.session.sessionInvalidUrl
       # 自定义登录页
-      loginPage: http://192.168.31.180:10020/html/demo-signIn.html
-      logoutUrl: http://192.168.31.180:10020/html/index.html
+      loginPage: /html/demo-signIn.html
+      logoutUrl: /html/index.html
       # 自定义注册页
-      registerPage: http://192.168.31.180:10020/html/demo-register.html
+      registerPage: /html/demo-register.html
       # 自定义返回方式 JSON | REDIRECT
       loginResponseType: JSON
       # 记住我过期时间
@@ -119,12 +119,12 @@ epsilon:
       # 当超过最大登陆数时处理策略，true 不允许当前用户登陆， false （默认值）踢掉之前登陆的用户
       maxSessionsPreventsLogin: false
       session:
-        sessionInvalidUrl: http://192.168.31.180:10020/html/demo-signIn.html
+        sessionInvalidUrl: /html/demo-signIn.html
     code:
       #图形验证码配置
       image:
         # 图形验证码数字个数
-        length: 5
+        length: 4
         #过期时间
         expireIn: 65
         # 宽度 此配置覆盖了默认配置，如果在页面请求地址中带有width参数，则将覆盖此配置
@@ -142,7 +142,7 @@ epsilon:
         # 要验证码验证的url:请求方式，":"分隔请求方式, ","分隔多个需验证地址，","之间不要有空格
         #url: /user:post,/user/*:get
     #不需做登陆验证的url，","分隔，","之间不要有空格
-    permitUrls: "/swagger-ui.html,/swagger-resources/**,/v2/api-docs"
+    permitUrls: "/swagger-ui.html,/swagger-resources/**,/v2/api-docs,/auth/user/register,/code/**"
 
     # 启动是自动建认证所必须的表，如果数据据已有，设置为false
     autoCreateTable: false

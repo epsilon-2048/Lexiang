@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 @FeignClient(value = "LX-UPLOAD-FILE")
 public interface UploadFileClientService {
 
-    @RequestMapping(value = "/upload",method = RequestMethod.POST)
+    @RequestMapping(value = "/file/upload",method = RequestMethod.POST)
     public String upload(@RequestParam("file") MultipartFile multipartFile);
 
 }

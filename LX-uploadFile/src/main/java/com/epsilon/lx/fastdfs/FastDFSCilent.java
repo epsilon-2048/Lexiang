@@ -91,8 +91,10 @@ public class FastDFSCilent {
         List<NameValuePair> nvpsList = new ArrayList<>();
         // 文件名后缀
         String suffix = getFilenameSuffix(filename);
-        if (!suffix.equalsIgnoreCase("mp4"))
-            throw new FastDFSException(ErrorCode.FILE_TYPE_ERROR,"上传格式必须为MP4");
+        if (!(suffix.equalsIgnoreCase("mp4")
+                || suffix.equalsIgnoreCase("jpg")
+                || suffix.equalsIgnoreCase("png")))
+            throw new FastDFSException(ErrorCode.FILE_TYPE_ERROR,"上传格式必须为MP4、jpg、png");
         // 文件名
         if (StringUtils.isNotBlank(filename)) {
             nvpsList.add(new NameValuePair(FILENAME, filename));

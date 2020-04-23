@@ -140,6 +140,6 @@ epsilon:
         # 要验证码验证的url:请求方式，":"分隔请求方式, ","分隔多个需验证地址，","之间不要有空格
         #url: /user:post,/user/*:get
     #不需做登陆验证的url，","分隔，","之间不要有空格
-    permitUrls: /user/register,/dept/list
+    permitUrls: /**
     # 启动是自动建认证所必须的表，如果数据据已有，设置为false
     autoCreateTable: false

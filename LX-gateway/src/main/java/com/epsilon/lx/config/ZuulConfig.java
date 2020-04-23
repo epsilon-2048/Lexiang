@@ -3,11 +3,40 @@ package com.epsilon.lx.config;
 
 import com.epsilon.lx.config.rule.RibbonRule;
 import com.netflix.loadbalancer.IRule;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 public class ZuulConfig {
+
+    /**
+     * https://www.jianshu.com/p/647cf467b47c
+     * 因为遇到了路由转发404的问题，所以决定采用自定义路由。刚开始尝试了从DB里读取，但发现再以后扩展服务的时候不够灵活，所以还是采用了自己从eureka中拉取服务列表缓存到zuul内存中的方式。
+     */
+    /**
+     * 有bug
+     */
+   /* @Autowired
+    ZuulProperties zuulProperties;
+    @Autowired
+    ServerProperties server;
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+    @Bean
+    public CustomRouteLocator routeLocator() {
+        CustomRouteLocator routeLocator = new CustomRouteLocator(this.server.getServletPrefix(), this.zuulProperties);
+        routeLocator.setJdbcTemplate(jdbcTemplate);
+        return routeLocator;
+    }
+
+    @Bean
+    public JdbcTemplate getJdbcTemplate(){
+        return new JdbcTemplate();
+    }*/
 
     //类似RedisTemplate，提供了多种边界访问远程http服务的方法
     //是一种简单便捷的访问restful服务模板类，是spring提供的用于访问Rest服务的客户端模板工具类

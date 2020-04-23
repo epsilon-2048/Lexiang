@@ -3,44 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <title>LX-影视平台</title>
-    <link rel="stylesheet" href="/layui/css/layui.css"/>
-    <script src="/layui/layui.js"></script>
-    <link rel="stylesheet" href="/css/login.css"/>
-    <link rel="stylesheet" href="/css/admin.css"/>
-    <script src="/js/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="http://localhost:10020/layui/css/layui.css"/>
+    <script src="http://localhost:10020/layui/layui.all.js"></script>
+    <script src="http://localhost:10020/layui/layui.js"></script>
+    <link rel="stylesheet" href="http://localhost:10020/css/login.css"/>
+    <link rel="stylesheet" href="http://localhost:10020/css/admin.css"/>
+    <script src="http://localhost:10020/js/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="http://localhost:10020/css/LX.css"/>
+    <link rel="stylesheet" href="http://localhost:10020/css/template.css"/>
+    <script src="http://localhost:10020/js/LX.js"></script>
 </head>
 <body>
-<ul class="layui-nav">
-    <li class="layui-nav-item">
-        <a href=""><img src="/image/logo.png"></a>
-    </li>
-    <li class="layui-nav-item">
-        <a href="">个人中心<span class="layui-badge-dot"></span></a>
-    </li>
-    <li class="layui-nav-item" lay-unselect="">
-        <a href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
-        <dl class="layui-nav-child">
-            <dd><a href="javascript:;">修改信息</a></dd>
-            <dd><a href="javascript:;">安全管理</a></dd>
-            <dd><a href="javascript:;">退了</a></dd>
-        </dl>
-    </li>
-</ul>
-<a href="http://localhost:10020/api/logout">退出</a>
-<div class="layui-trans layadmin-user-login-footer">
+<form class="layui-form">
+    <!--导航条-->
+    <div>
+        <ul class="layui-nav">
+            <li class="layui-nav-item">
+                <a style="cursor:pointer" onclick="gotoHome()"><img src="http://localhost:10020/image/logo.png"></a>
+            </li>
+            <li class="layui-nav-item">
+                <div class="layui-inline" style="margin-left: 80px">
+                    <input class="layui-input" type="text" style="width: 350px"
+                           name="searchText" id="searchText" placeholder="搜索..." autocomplete="off"/>
+                </div>
+                <button type="button" class="layui-btn layui-btn-radius" onclick="gotoSearch(null,null,null)">
+                    <i class="layui-icon layui-icon-search"></i>
+                </button>
+            </li>
+            <div style="float:right">
+                <li class="layui-nav-item">
+                    <a href="http://locahost:10020/html/sort.html" style="font-size: large">
+                        <i class="layui-icon layui-icon-list "
+                           style="font-size: 22px; color: #1E9FFF;">
+                        </i>排行榜
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="http://localhost:10020/html/my.html?my=1" style="font-size: large">
+                        <i class="layui-icon layui-icon-form "
+                           style="font-size: 20px; color: #1E9FFF;">
+                        </i>播放记录
+                    </a>
+                </li>
+                <div id="show" style="float:right">
+                </div>
+            </div>
+        </ul>
+    </div>
+    <div class="div-margin-top">
+        <!--类型-->
+        <div class="div-margin-second">
+            <span style="font-size: 20px" class="layui-breadcrumb" lay-separator="|">
+                <div id="type_div">
+
+                </div>
+            </span>
+            <input hidden id="type" value="dd"/>
+        </div>
+
+        <hr class="layui-bg-black">
+
+        <!--轮播图-->
+        <div class="layui-carousel" id="carousel">
+            <div carousel-item id="carousel_item">
+            </div>
+        </div>
+        <hr class="layui-bg-black">
+
+        <!--地区与类别-->
+        <div class="div-margin-second">
+            <div>
+                <label class="layui-form-label"
+                       style="margin: auto 0 -4px; width: 60px; font-size: 20px;padding: 5px 0px">地区：</label>
+                <span style="font-size: 20px" class="layui-breadcrumb" lay-separator="|">
+                    <div id="country_div">
+
+                   </div>
+                </span>
+                <input hidden id="country" value="dd"/>
+            </div>
+            <div>
+                <label class="layui-form-label" style="margin: auto; width: 60px; font-size: 20px;padding: 5px 0px"
+                       style="width: 120px; font-size: 20px;padding: 5px 0px">类别：</label>
+                <span style="font-size: 20px" class="layui-breadcrumb" lay-separator="|">
+                       <div id="category_div">
+                       </div>
+                    </span>
+                <input hidden id="category" value="dd"/>
+            </div>
+        </div>
+
+        <!--热搜-->
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend><a href="http://locahost:10020/html/sort.html">热搜>>>>更多</a></legend>
+            <div class="layui-field-box">
+                <div class="div-margin-second" id="hotsearch">
+
+                </div>
+            </div>
+        </fieldset>
+
+        <!--最多播放-->
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend><a href="http://locahost:10020/html/sort.html">热播>>>>更多</a></legend>
+            <div class="layui-field-box">
+                <div class="div-margin-second" id="view">
+
+                </div>
+            </div>
+        </fieldset>
+
+        <!--最多点赞-->
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend><a href="http://locahost:10020/html/sort.html">最多点赞>>>>更多</a></legend>
+            <div class="layui-field-box">
+                <div class="div-margin-second" id="like">
+
+                </div>
+            </div>
+        </fieldset>
+
+        <!--最多收藏-->
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend><a href="http://locahost:10020/html/sort.html">最多收藏>>>>更多</a></legend>
+            <div class="layui-field-box">
+                <div class="div-margin-second" id="follow">
+
+                </div>
+            </div>
+        </fieldset>
+
+    </div>
+</form>
+
+<div class="layui-trans footer">
     <p>© 2020 <a href="#" target="_blank">陈少鑫</a></p>
 </div>
+<!--<a href="http://localhost:10020/api/logout">退出</a>-->
 </body>
+
 <script>
-    layui.use('element', function(){
+    /*导航条*/
+
+    $(function () {
+        setNav();
+        setCarousel();
+        setData("follow", "follow");
+        setData("likes", "like");
+        setData("hotsearch", "hotsearch");
+        setData("view", "view");
+    });
+
+
+    //设置子导航条
+    function setNav() {
+        var html = "<a style='font-size: 20px; cursor:pointer' onclick='gotoHome()'>首页</a>";
+        for (var [key, value] of typeMap) {
+            html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoSearch(" + key + ",null,null)'>" + value + "</a>"
+        }
+        html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoRecommend()'>推荐榜单</a>";
+        $('#type_div').append(html);
+        html = "";
+        for (var [key, value] of countryMap) {
+            html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoSearch(null," + key + ",null)'>" + value + "</a>"
+        }
+        $("#country_div").append(html);
+        html = "";
+        for (var [key, value] of categoryMap) {
+            html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoSearch(null,null," + key + ")'>" + value + "</a>"
+        }
+        $("#category_div").append(html);
+    }
+
+    function gotoSearch(tepy, country, category) {
+        if (tepy != null)
+            nowTepy = tepy;
+        if (country != null)
+            nowCountry = country;
+        if (category != null)
+            nowCategory = category;
+        console.log("----++----"+$("#searchText").val().trim());
+        var vname = $("#searchText").val().trim();
+        console.log("-----------"+vname);
+        location.href = gatewayUrl+'/html/search.html?type=' + nowTepy + '&country=' + nowCountry + '&category=' + nowCountry + '&vname=' + vname;
+    }
+
+    function gotoHome() {
+        nowTepy = null;
+        nowCountry = null;
+        nowCategory = null;
+        location.href = gatewayUrl+'/html/index.html';
+    }
+
+    function gotoRecommend() {
+        nowTepy = null;
+        nowCountry = null;
+        nowCategory = null;
+        location.href = gatewayUrl+'/html/recommend.html';
+    }
+
+
+    //设置轮播图
+    function setCarousel() {
+        ajax(videoUrl+'/recommend/videos/15', null, 'get', true, true,"application/x-www-form-urlencoded:charset=UTF-8", function (res, prama) {
+            var html = "";
+            var row = 0;
+            res.forEach(function (item, index) {
+                if (row == 0) {
+                    html += "<div>";
+                }
+                html += "<a href='"+gatewayUrl+"/html/info.html?vid="+item.id+"'><img class='image-style' src='http://49.235.122.86:8888/" + item.picture + "'></a>";
+                row = ++row % 3;
+                if (row == 0)
+                    html += "</div>"
+            });
+            if (row != 0) html += "</div>";
+            //console.log(html);
+            $("#carousel_item").append(html);
+            /*轮播图*/
+            layui.use('carousel', function () {
+                var carousel = layui.carousel;
+                //建造实例
+                carousel.render({
+                    elem: '#carousel'
+                    , width: '100%' //设置容器宽度
+                    , arrow: 'none'
+                });
+            });
+        }, null, function (XMLHttpRequest, prama) {
+            console.log(XMLHttpRequest);
+        }, null);
+
+    }
+    //设置首页排行数据
+    function setData(api, divID) {
+        ajax(videoUrl+'/sort/' + api + '/video/9', null, 'get', true, true, "application/x-www-form-urlencoded:charset=UTF-8",function (res, prama) {
+            var html = "<div class='layui-fluid layadmin-cmdlist-fluid'>";
+            var row = 0;
+            res.forEach(function (item, index) {
+                if (row == 0) {
+                    html += "<div class='layui-row'>";
+                }
+                html += "<a href='http:localhost:10020/html/info.html?vid=" + item.id + "'><div class='layui-col-md4 layui-col-sm4'>" +
+                    "<div class='cmdlist-container' style='margin: 5px'>" +
+                    "<img src='http://49.235.122.86:8888/" + item.picture + "'>" +
+                    "<div class='cmdlist-text'>" +
+                    "<p class='info'>" + item.name + "</p>" +
+                    "<i class='layui-icon layui-icon-friends'></i>" + item.views +
+                    "<i class='layui-icon layui-icon-praise' style='margin-left:30%'></i>" + item.likes +
+                    "<span class='flow'><i class='layui-icon layui-icon-rate'></i>" + item.follows +
+                    "</span></div></div></div></a>";
+                row = ++row % 3;
+                if (row == 0)
+                    html += "</div>"
+            });
+            if (row != 0) html += "</div>"
+            html += "</div>";
+            //console.log(html);
+            $("#" + divID).append(html);
+        }, null, function (XMLHttpRequest, prama) {
+            console.log(XMLHttpRequest);
+        }, null);
+    }
+
+    layui.use('element', function () {
         var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
 
         //监听导航点击
-        element.on('nav(demo)', function(elem){
+        element.on('nav(demo)', function (elem) {
             //console.log(elem)
             layer.msg(elem.text());
         });
     });
+
+
 </script>
+<!--
+                <div class="layui-fluid layadmin-cmdlist-fluid">
+                    <div class="layui-row layui-col-space30">
+                        <div class="layui-col-md2 layui-col-sm4">
+                            <div class="cmdlist-container">
+                                <img src="/image/404.jpg">
+                                <div class="cmdlist-text">
+                                    <p class="info">2018春夏季新款港味短款白色T恤+网纱中长款chic半身裙套装两件套</p>
+                                    <i class="layui-icon layui-icon-friends"></i>433
+                                    <i class="layui-icon layui-icon-praise" style="margin-left:18px"></i>433
+                                    <span class="flow"><i class="layui-icon layui-icon-rate"></i>433</span>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+             -->
+<!--
+               <div class="price">
+                    <b>￥79</b>
+                    <p>
+                      ¥
+                      <del>130</del>
+                    </p>
+                    <span class="flow">
+                      <i class="layui-icon layui-icon-rate"></i>
+                      433
+                    </span>
+                </div>-->
 
 </html>

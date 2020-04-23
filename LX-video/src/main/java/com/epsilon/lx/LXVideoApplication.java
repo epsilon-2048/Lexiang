@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableEurekaClient
 @EnableSwagger2
 @EnableFeignClients
-//@ComponentScan({"epsilon_2048.security","com.epsilon.lx"})
+@ComponentScan({"epsilon_2048.security","com.epsilon.lx"})
 public class LXVideoApplication {
     public static void main(String[] args) {
         // TODO Auto-generated method stub

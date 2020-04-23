@@ -130,13 +130,13 @@ public class IVideoServiceImpl implements IVideoService {
     private VideoExample getVideoExample(Video video) {
         VideoExample videoExample = new VideoExample();
         if (video.getActors()!=null){
-            videoExample.createCriteria().andActorsLike(video.getActors());
+            videoExample.createCriteria().andActorsLike("%"+video.getActors()+"%");
         }
         if (video.getDirector()!=null){
-            videoExample.createCriteria().andDirectorLike(video.getDirector());
+            videoExample.createCriteria().andDirectorLike("%"+video.getDirector()+"%");
         }
         if (video.getName()!=null){
-            videoExample.createCriteria().andNameLike(video.getName());
+            videoExample.createCriteria().andNameLike("%"+video.getName()+"%");
         }
         if (video.getFree()!=null){
             videoExample.createCriteria().andFreeEqualTo(video.getFree());
@@ -153,6 +153,7 @@ public class IVideoServiceImpl implements IVideoService {
         if (video.getId()!=null){
             videoExample.createCriteria().andIdEqualTo(video.getId());
         }
+        videoExample.setOrderByClause("likes * 5 + follows * 5 + views * 2 + search_count desc");
         return videoExample;
     }
 

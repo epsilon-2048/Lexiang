@@ -17,11 +17,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController //Controller与ResponseBody的结合体
 @Api
-@RequestMapping("/dept")
+@RequestMapping("/api/dept")
 public class DeptController {
 
     @Autowired
@@ -77,4 +78,11 @@ public class DeptController {
     public String getEx500(@PathVariable("id") int id) throws Exception {
         throw new InternalServerErrorException(ErrorCode.FILE_UPLOAD_FAILED, String.valueOf(id));
     }
+    @ApiOperation(value="测试抛出异常", notes="已测试")
+    @RequestMapping(value = "/dev/url", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public String getURL(HttpServletRequest request){
+        return request.getRequestURL().toString();
+    }
+
 }

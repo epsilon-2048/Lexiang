@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>LX-影视平台</title>
-    <link rel="stylesheet" href="/layui/css/layui.css"/>
-    <script src="/layui/layui.js"></script>
-    <link rel="stylesheet" href="/css/login.css"/>
-    <link rel="stylesheet" href="/css/admin.css"/>
-    <script src="/js/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="http://localhost:10020/layui/css/layui.css"/>
+    <script src="http://localhost:10020/layui/layui.all.js"></script>
+    <script src="http://localhost:10020/layui/layui.js"></script>
+    <link rel="stylesheet" href="http://localhost:10020/css/login.css"/>
+    <link rel="stylesheet" href="http://localhost:10020/css/admin.css"/>
+    <script src="http://localhost:10020/js/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="http://localhost:10020/css/LX.css"/>
+    <link rel="stylesheet" href="http://localhost:10020/css/template.css"/>
+    <script src="http://localhost:10020/js/LX.js"></script>
 </head>
 <body class="layui-layout-body" >
 </form>
@@ -35,8 +39,8 @@
                         </div>
                         <div class="layui-col-xs5">
                             <div style="margin-left: 10px;">
-                                <img src="http://localhost:10020/api/code/image?width=90" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode"
-                                     onclick="javascript:this.src='http://localhost:10020/api/code/image?width=90&rand='+Math.random();">
+                                <img src="http://localhost:10200/code/image?width=90" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode"
+                                     onclick="javascript:this.src='http://localhost:10200/code/image?width=90&rand='+Math.random();">
                             </div>
                         </div>
                     </div>
@@ -71,10 +75,11 @@
         //提交
         form.on('submit(LAY-user-login-submit)', function(obj){
             var field = obj.field;
+            var reUrl = document.referrer;
            // console.log(field);
             //请求接口
             $.ajax({
-                url: '/api/authentication/form' //实际使用请改成服务端真实接口
+                url: gatewayUrl+'/api/authentication/form' //实际使用请改成服务端真实接口
                 ,data: field
                 ,type: "post"
                 ,success: function(res){
@@ -84,16 +89,19 @@
                         ,time: 1000
                     }, function(){
                     //    location.href = '/api/html/demo-signIn.html'; //跳转到登入页
-                        var reUrl = document.referrer;
+                        //var reUrl = document.referrer;
                         var url = document.URL;
-                        if (reUrl.startsWith(url.split(":")[0])){
-                             if (reUrl.indexOf("/html/index.html") || reUrl.indexOf("/html/demo-signIn.html") ) {
-                                 window.location.href = "/html/index.html";
+                        if (reUrl.startsWith(url.substr(0,url.lastIndexOf(":")))){
+                             if (reUrl.includes("/html/index.html") || reUrl.includes("/html/demo-signIn.html") ) {
+                                 console.log(":"+reUrl);
+                                 window.location.href = gatewayUrl+"/html/index.html";
                              } else {
+                                 console.log("+"+reUrl);
                                  window.location.href = reUrl;
                              }
                         } else {
-                            window.location.href = "/html/index.html";
+                            console.log("-"+reUrl);
+                            window.location.href = gatewayUrl+"/html/index.html";
                         }
                         //location.href = search.redirect ? decodeURIComponent(search.redirect) : '/html/index.html';
                     });
