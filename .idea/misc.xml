@@ -15,7 +15,10 @@
       <set>
         <option value="$PROJECT_DIR$/LX-auth-api/pom.xml" />
         <option value="$PROJECT_DIR$/LX-eureka/LX-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/dept-api/pom.xml" />
         <option value="$PROJECT_DIR$/dept-feign/LX-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/dept-feign/pom.xml" />
+        <option value="$PROJECT_DIR$/dept-test/pom.xml" />
       </set>
     </option>
   </component>

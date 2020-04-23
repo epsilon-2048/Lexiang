@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LX-影视平台</title>
+    <link rel="stylesheet" href="http://localhost:10020/layui/css/layui.css"/>
+    <script src="http://localhost:10020/layui/layui.all.js"></script>
+    <script src="http://localhost:10020/layui/layui.js"></script>
+    <link rel="stylesheet" href="http://localhost:10020/css/login.css"/>
+    <link rel="stylesheet" href="http://localhost:10020/css/admin.css"/>
+    <script src="http://localhost:10020/js/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="http://localhost:10020/css/LX.css"/>
+    <link rel="stylesheet" href="http://localhost:10020/css/template.css"/>
+    <script src="http://localhost:10020/js/LX.js"></script>
+</head>
+<body>
+<form class="layui-form">
+    <!--导航条-->
+    <div>
+        <ul class="layui-nav">
+            <li class="layui-nav-item">
+                <a style="cursor:pointer" onclick="gotoHome()"><img src="http://localhost:10020/image/logo.png"></a>
+            </li>
+            <li class="layui-nav-item">
+                <div class="layui-inline" style="margin-left: 80px">
+                    <input class="layui-input" type="text" style="width: 350px"
+                           name="searchText" id="searchText" placeholder="搜索..." autocomplete="off"/>
+                </div>
+                <button type="button" class="layui-btn layui-btn-radius" onclick="gotoSearch(null,null,null)">
+                    <i class="layui-icon layui-icon-search"></i>
+                </button>
+            </li>
+            <div style="float:right">
+                <li class="layui-nav-item">
+                    <a href="http://localhost:10020/html/sort.html" style="font-size: large">
+                        <i class="layui-icon layui-icon-list "
+                           style="font-size: 22px; color: #1E9FFF;">
+                        </i>排行榜
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="http://localhost:10020/html/my.html?my=1" style="font-size: large">
+                        <i class="layui-icon layui-icon-form "
+                           style="font-size: 20px; color: #1E9FFF;">
+                        </i>播放记录
+                    </a>
+                </li>
+                <div id="show" style="float:right">
+                </div>
+            </div>
+        </ul>
+    </div>
+    <div class="div-margin-top">
+        <!--类型-->
+        <div class="div-margin-second">
+            <span style="font-size: 20px" class="layui-breadcrumb" lay-separator="|">
+                <div id="type_div">
+
+                </div>
+            </span>
+            <input hidden id="type" value="dd"/>
+        </div>
+
+
+        <div class="div-margin-second">
+            <!--影视详情-->
+            <fieldset class="layui-elem-field layui-field-title div-margin-second">
+                <legend>影视播放</legend>
+                <div class="div-margin-second">
+                    <video id="pathVideo" width="90%" height="80%" style="clear:both;display:block;margin:auto" controls>对不起，你的浏览器不支持</video>
+                </div>
+            </fieldset>
+            <!--影视详情-->
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>影视资源</legend>
+                <div class="layui-row layui-col-space5 div-margin-second" id="resourceDiv">
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</form>
+
+
+<div class="layui-trans footer">
+    <p>© 2020 <a href="#" target="_blank">陈少鑫</a></p>
+</div>
+</body>
+<script>
+
+    $(function () {
+        setNav();
+        loadVideoInfo();
+    });
+
+
+    //设置子导航条
+    function setNav() {
+        var html = "<a style='font-size: 20px; cursor:pointer' onclick='gotoHome()'>首页</a>";
+        for (var [key, value] of typeMap) {
+            html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoSearch(" + key + ",null,null)'>" + value + "</a>"
+        }
+        html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoRecommend()'>推荐榜单</a>";
+        $('#type_div').append(html);
+        html = "";
+        for (var [key, value] of countryMap) {
+            html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoSearch(null," + key + ",null)'>" + value + "</a>"
+        }
+        $("#country_div").append(html);
+        html = "";
+        for (var [key, value] of categoryMap) {
+            html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoSearch(null,null," + key + ")'>" + value + "</a>"
+        }
+        $("#category_div").append(html);
+    }
+
+    function gotoSearch(tepy, country, category) {
+        if (tepy != null)
+            nowTepy = tepy;
+        if (country != null)
+            nowCountry = country;
+        if (category != null)
+            nowCategory = category;
+        console.log("----gotoSearch----"+$("#searchText").val().trim());
+        var vname = $("#searchText").val().trim();
+        console.log("------search-----"+'/html/search.html?type=' + nowTepy + '&country=' + nowCountry + '&category=' + nowCountry + '&vname=' + vname);
+        location.href = gatewayUrl+'/html/search.html?type=' + nowTepy + '&country=' + nowCountry + '&category=' + nowCountry + '&vname=' + vname;
+    }
+
+    function gotoHome() {
+        nowTepy = null;
+        nowCountry = null;
+        nowCategory = null;
+        location.href = gatewayUrl+'/html/index.html';
+    }
+
+    function gotoRecommend() {
+        nowTepy = null;
+        nowCountry = null;
+        nowCategory = null;
+        location.href = gatewayUrl+'/html/recommend.html';
+    }
+
+    function loadVideoInfo() {
+        loadPath(getQueryString('path'));
+
+        var url = videoUrl+'/videos/' + getQueryString('vid');
+        var res = ajaxAndReturnRes(url, null, 'get',true);
+        var html="";
+        res.resourcePathList.forEach(function (item, index) {
+            html += "<div  class='layui-col-md1 layui-col-sm4'> <a style='cursor:pointer' onclick=loadPath('"+item.path+"')>第 "+ (index+1) +" 集</a></div>"
+        });
+        $("#resourceDiv").append(html);
+    }
+
+    function loadPath(path){
+        if (path.endsWith("mp4")){
+            $("#pathVideo").attr("src","http://49.235.122.86:8888/"+path);
+            $("#pathVideo").attr("type","video/mp4");
+        }
+        if (path.endsWith("webm")){
+            $("#pathVideo").attr("src","http://49.235.122.86:8888/"+path);
+            $("#pathVideo").attr("type","video/webm");
+        }
+        if (path.endsWith("ogg")){
+            $("#pathVideo").attr("src","http://49.235.122.86:8888/"+path);
+            $("#pathVideo").attr("type","video/ogg");
+        }
+        history.replaceState(null, document.title,document.URL.split("&")[0] + "&path=" + path);
+    }
+    layui.use('element', function () {
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //监听导航点击
+        element.on('nav(demo)', function (elem) {
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+
+</script>
+</html>

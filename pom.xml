@@ -9,10 +9,10 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>LX-eureka</module>
-        <module>LX-gateway</module>
+        <module>LX-gateway</module><!--
         <module>dept-test</module>
         <module>dept-api</module>
-        <module>dept-feign</module>
+        <module>dept-feign</module>-->
         <module>LX-auth</module>
         <module>LX-common</module>
         <module>LX-uploadFile</module>

@@ -1,0 +1,341 @@
+<!DOCTYPE>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LX-影视平台</title>
+    <link rel="stylesheet" href="http://localhost:10020/layui/css/layui.css"/>
+    <script src="http://localhost:10020/layui/layui.all.js"></script>
+    <script src="http://localhost:10020/layui/layui.js"></script>
+    <link rel="stylesheet" href="http://localhost:10020/css/login.css"/>
+    <link rel="stylesheet" href="http://localhost:10020/css/admin.css"/>
+    <script src="http://localhost:10020/js/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="http://localhost:10020/css/LX.css"/>
+    <link rel="stylesheet" href="http://localhost:10020/css/template.css"/>
+    <script src="http://localhost:10020/js/LX.js"></script>
+</head>
+<body>
+<form class="layui-form">
+    <!--导航条-->
+    <div>
+        <ul class="layui-nav">
+            <li class="layui-nav-item">
+                <a style="cursor:pointer" onclick="gotoHome()"><img src="http://localhost:10020/image/logo.png"></a>
+            </li>
+            <li class="layui-nav-item">
+                <div class="layui-inline" style="margin-left: 80px">
+                    <input class="layui-input" type="text" style="width: 350px"
+                           name="searchText" id="searchText" placeholder="搜索..." autocomplete="off"/>
+                </div>
+                <button type="button" class="layui-btn layui-btn-radius" onclick="gotoSearch(null,null,null)">
+                    <i class="layui-icon layui-icon-search"></i>
+                </button>
+            </li>
+            <div style="float:right">
+                <li class="layui-nav-item">
+                    <a href="http://localhost:10020/html/sort.html" style="font-size: large">
+                        <i class="layui-icon layui-icon-list "
+                           style="font-size: 22px; color: #1E9FFF;">
+                        </i>排行榜
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="http://localhost:10020/html/my.html?my=1" style="font-size: large">
+                        <i class="layui-icon layui-icon-form "
+                           style="font-size: 20px; color: #1E9FFF;">
+                        </i>播放记录
+                    </a>
+                </li>
+                <div id="show" style="float:right">
+                </div>
+            </div>
+        </ul>
+    </div>
+    <div class="div-margin-top">
+        <!--类型-->
+        <div class="div-margin-second">
+            <span style="font-size: 20px" class="layui-breadcrumb" lay-separator="|">
+                <div id="type_div">
+
+                </div>
+            </span>
+            <input hidden id="type" value="dd"/>
+        </div>
+
+        <div class="div-margin-second">
+
+            <!--排行榜-->
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend><a>推荐榜</a></legend>
+                <div class="layui-field-box">
+                    <div class="layui-row layui-col-space1">
+                        <div class="layui-col-md3">
+                            <fieldset class="layui-elem-field layui-field-title" style="color: red">
+                                <legend><a>总榜前50</a></legend>
+                                <div class="layui-row layui-col-space1">
+                                    <div class="layui-col-md12" style="font-size: 13px;"><p>这个没有分类哦</p></div>
+                                </div>
+                                <table class="layui-table" lay-skin="line">
+                                    <colgroup>
+                                        <col width="50%">
+                                        <col width="30%">
+                                        <col width="20%">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>名称</th>
+                                        <th>国别|类型|类别</th>
+                                        <th>时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="recommend_all">
+                                    </tbody>
+                                </table>
+                            </fieldset>
+                        </div>
+                        <div class="layui-col-md3">
+                            <fieldset class="layui-elem-field layui-field-title" style="color: red">
+                                <legend><a>国家|地区榜前50</a></legend>
+                                <div class="layui-row layui-col-space1">
+                                    <div class="layui-col-md12">
+                                    <span style="font-size: 10px" class="layui-breadcrumb" lay-separator="|">
+                                        <div id="rec_country_div">
+                                        </div>
+                                    </span>
+                                    </div>
+                                </div>
+                                <table class="layui-table" lay-skin="line">
+                                    <colgroup>
+                                        <col width="50%">
+                                        <col width="30%">
+                                        <col width="20%">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>名称</th>
+                                        <th>国别|类型|类别</th>
+                                        <th>时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="recommend_country">
+                                    </tbody>
+                                </table>
+                            </fieldset>
+                        </div>
+                        <div class="layui-col-md3">
+                            <fieldset class="layui-elem-field layui-field-title" style="color: red">
+                                <legend><a>类型榜前50</a></legend>
+                                <div class="layui-row layui-col-space1">
+                                    <div class="layui-col-md12">
+                                        <span style="font-size: 10px" class="layui-breadcrumb" lay-separator="|">
+                                            <div id="rec_type_div">
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                                <table class="layui-table" lay-skin="line">
+                                    <colgroup>
+                                        <col width="50%">
+                                        <col width="30%">
+                                        <col width="20%">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>名称</th>
+                                        <th>国别|类型|类别</th>
+                                        <th>时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="recommend_type">
+                                    </tbody>
+                                </table>
+                            </fieldset>
+                        </div>
+                        <div class="layui-col-md3">
+                            <fieldset class="layui-elem-field layui-field-title" style="color: red">
+                                <legend><a>类别榜前50</a></legend>
+                                <div class="layui-row layui-col-space1">
+                                    <div class="layui-col-md12" >
+                                        <span style="font-size: 10px" class="layui-breadcrumb" lay-separator="|">
+                                            <div id="rec_category_div">
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                                <table class="layui-table" lay-skin="line">
+                                    <colgroup>
+                                        <col width="50%">
+                                        <col width="30%">
+                                        <col width="20%">
+                                        <col>
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th>名称</th>
+                                        <th>国别|类型|类别</th>
+                                        <th>时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="recommend_category">
+                                    </tbody>
+                                </table>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+</form>
+
+
+<div class="layui-trans footer">
+    <p>© 2020 <a href="#" target="_blank">陈少鑫</a></p>
+</div>
+</body>
+<script>
+
+    $(function () {
+        setNav();
+        setRecNav();
+        loadSortData();
+    });
+
+
+    //设置子导航条
+    function setNav() {
+        var html = "<a style='font-size: 20px; cursor:pointer' onclick='gotoHome()'>首页</a>";
+        for (var [key, value] of typeMap) {
+            html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoSearch(" + key + ",null,null)'>" + value + "</a>"
+        }
+        html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoRecommend()'>推荐榜单</a>";
+        $('#type_div').append(html);
+        html = "";
+        for (var [key, value] of countryMap) {
+            html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoSearch(null," + key + ",null)'>" + value + "</a>"
+        }
+        $("#country_div").append(html);
+        html = "";
+        for (var [key, value] of categoryMap) {
+            html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoSearch(null,null," + key + ")'>" + value + "</a>"
+        }
+        $("#category_div").append(html);
+    }
+    //设置推荐子导航条
+    function setRecNav() {
+        var html="";
+        for (var [key, value] of typeMap) {
+            html += "<a style='font-size: 10px; cursor:pointer' onclick=\"setRecData('types'," + key + ",'recommend_type')\">" + value + "</a>"
+        }
+        $('#rec_type_div').append(html);
+        html = "";
+        for (var [key, value] of countryMap) {
+            html += "<a style='font-size: 10px; cursor:pointer' onclick=\"setRecData('counties'," + key + ",'recommend_country')\">" + value + "</a>"
+        }
+        $("#rec_country_div").append(html);
+        html = "";
+        for (var [key, value] of categoryMap) {
+            html += "<a style='font-size: 10px; cursor:pointer' onclick=\"setRecData('categories'," + key + ",'recommend_category')\">" + value + "</a>"
+        }
+        $("#rec_category_div").append(html);
+    }
+
+    function gotoSearch(tepy, country, category) {
+        if (tepy != null)
+            nowTepy = tepy;
+        if (country != null)
+            nowCountry = country;
+        if (category != null)
+            nowCategory = category;
+        console.log("----gotoSearch----"+$("#searchText").val().trim());
+        var vname = $("#searchText").val().trim();
+        console.log("------search-----"+'/html/search.html?type=' + nowTepy + '&country=' + nowCountry + '&category=' + nowCountry + '&vname=' + vname);
+        location.href = gatewayUrl+'/html/search.html?type=' + nowTepy + '&country=' + nowCountry + '&category=' + nowCountry + '&vname=' + vname;
+    }
+
+    function gotoHome() {
+        nowTepy = null;
+        nowCountry = null;
+        nowCategory = null;
+        location.href = '/html/index.html';
+    }
+
+    function gotoRecommend() {
+        nowTepy = null;
+        nowCountry = null;
+        nowCategory = null;
+        location.href = gatewayUrl+'/html/recommend.html';
+    }
+
+    function loadSortData() {
+
+        setRecData("","", "recommend_all");
+        setRecData("counties",countryMap.entries().next().value[0],"recommend_country");
+        setRecData("types", typeMap.entries().next().value[0],"recommend_type");
+        setRecData("categories", categoryMap.entries().next().value[0],"recommend_category");
+        /*loadSortFollowData();
+        loadSortLikeData();
+        loadSortSearchData();
+        loadSortViewData();*/
+    }
+
+    function setRecData(api, id, divID) {
+        ajax(videoUrl+'/recommend/videos/50/' + api + '/'+id, null, 'get', true, true, "application/x-www-form-urlencoded:charset=UTF-8", function (res, prama) {
+
+            var html = "";
+            $("#" + divID).text("");
+            if (res !== null && res.length !== 0) {
+                res.forEach(function (item, index) {
+                    html += "<tr>";
+                    html += "<td><a href='"+gatewayUrl+"/html/info.html?vid=" + item.id + "'>" + item.name + "</a></td>";
+                    html += "<td >" + countryMap.get(item.countryId) + "|" +
+                        typeMap.get(item.typeId) + "|" +
+                        categoryMap.get(item.categoryId) + "</td>";
+                    html += "<td>" + new Date(item.releaseTime).toLocaleDateString() + "</td>"
+                    html += "</tr>";
+                });
+            } else {
+                html = "<i class='layui-icon layui-icon-face-cry' style='font-size: 50px; color: red;'></i><p style='font-size: 30px'>查无资源</p>";
+            }
+            //console.log(html);
+            $("#" + divID).append(html);
+        }, null, function (XMLHttpRequest, prama) {
+            console.log(XMLHttpRequest);
+        }, null);
+    }
+
+    /*
+    function loadSortLikeData(){}
+    function loadSortFollowData(){}
+    function loadSortViewData(){}
+    function loadSortSearchData(){}
+    */
+    layui.use('element', function () {
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //监听导航点击
+        element.on('nav(demo)', function (elem) {
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+
+    /*
+        $.ajax({
+            url: '/api/authentication/form' //实际使用请改成服务端真实接口
+            ,data: field
+            ,type: "post"
+            ,async: true   //如果同步为false
+            ,success: function(res){
+
+            }
+            ,error:function(XMLHttpRequest) {
+
+            }
+        });
+    */
+</script>
+</html>

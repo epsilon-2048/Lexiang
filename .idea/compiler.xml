@@ -6,9 +6,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="dept-api" />
-        <module name="dept-feign" />
-        <module name="dept-test" />
         <module name="LX-auth" />
         <module name="LX-auth-api" />
         <module name="LX-common" />
@@ -23,6 +20,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="dept-api" target="1.8" />
+      <module name="dept-feign" target="1.8" />
+      <module name="dept-test" target="1.8" />
       <module name="LX-auth-api" target="1.8" />
     </bytecodeTargetLevel>
   </component>

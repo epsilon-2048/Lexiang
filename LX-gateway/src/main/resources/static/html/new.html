@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LX-影视平台</title>
+    <link rel="stylesheet" href="http://localhost:10020/layui/css/layui.css"/>
+    <script src="http://localhost:10020/layui/layui.all.js"></script>
+    <script src="http://localhost:10020/layui/layui.js"></script>
+    <link rel="stylesheet" href="http://localhost:10020/css/login.css"/>
+    <link rel="stylesheet" href="http://localhost:10020/css/admin.css"/>
+    <script src="http://localhost:10020/js/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="http://localhost:10020/css/LX.css"/>
+    <link rel="stylesheet" href="http://localhost:10020/css/template.css"/>
+    <script src="http://localhost:10020/js/LX.js"></script>
+</head>
+<body>
+<form class="layui-form">
+    <!--导航条-->
+    <div>
+        <ul class="layui-nav">
+            <li class="layui-nav-item">
+                <a style="cursor:pointer" onclick="gotoHome()"><img src="/image/logo.png"></a>
+            </li>
+            <li class="layui-nav-item">
+                <div class="layui-inline" style="margin-left: 80px">
+                    <input class="layui-input" type="text" style="width: 350px"
+                           name="searchText" id="searchText" placeholder="搜索..." autocomplete="off"/>
+                </div>
+                <button type="button" class="layui-btn layui-btn-radius" onclick="gotoSearch(null,null,null)">
+                    <i class="layui-icon layui-icon-search"></i>
+                </button>
+            </li>
+            <div style="float:right">
+                <li class="layui-nav-item">
+                    <a href="http://localhost:10020/html/sort.html" style="font-size: large">
+                        <i class="layui-icon layui-icon-list "
+                           style="font-size: 22px; color: #1E9FFF;">
+                        </i>排行榜
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="http://localhost:10020/html/my.html?my=1" style="font-size: large">
+                        <i class="layui-icon layui-icon-form "
+                           style="font-size: 20px; color: #1E9FFF;">
+                        </i>播放记录
+                    </a>
+                </li>
+                <div id="show" style="float:right">
+                </div>
+            </div>
+        </ul>
+    </div>
+    <div class="div-margin-top">
+        <!--类型-->
+        <div class="div-margin-second">
+            <span style="font-size: 20px" class="layui-breadcrumb" lay-separator="|">
+                <div id="type_div">
+
+                </div>
+            </span>
+            <input hidden id="type" value="dd"/>
+        </div>
+
+        <div class="div-margin-second">
+            <!--搜索结果-->
+            <fieldset class="layui-elem-field layui-field-title div-margin-second">
+                <legend>新增分类</legend>
+                <div class="layui-fluid layadmin-cmdlist-fluid" id="create_assort">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">类型：</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="assort_type" name="assort_type" placeholder="当输入值时会新增一个类型分类"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">类别：</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="assort_category" name="assort_category" placeholder="当输入值时会新增一个类别分类"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">国家或地区：</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="assort_country" name="assort_country" placeholder="当输入值时会新增一个国家或地区分类"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn" lay-submit="" lay-filter="assort" onclick="insertAssort()">
+                            立即提交
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="layui-elem-field layui-field-title div-margin-second">
+                <legend>上传视频</legend>
+                <div class="layui-fluid layadmin-cmdlist-fluid" id="create_video">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">影视名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="videoName" name="videoName" lay-verify="required" lay-reqtext="影视名称是必填项，岂能为空？"
+                                   placeholder="请输入" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">导演名称</label>
+                        <div class="layui-input-block">
+                            <input type="text"  id="director" name="director" lay-verify="required" lay-reqtext="导演是必填项，岂能为空？"
+                                   placeholder="多导演空格隔开" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">主演名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="actors" name="actors" lay-verify="required" lay-reqtext="主演名称是必填项，岂能为空？"
+                                   placeholder="多主演空格隔开" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">影视图片</label>
+                        <button type="button" class="layui-btn" id="picture" >
+                            <i class="layui-icon">&#xe67c;</i>点击上传
+                        </button>
+                        <input value="" hidden id="path_picture">
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">国家或地区</label>
+                            <div class="layui-input-inline">
+                                <select id="select_country" name="select_country" lay-verify="required" lay-search="" lay-reqtext="国家或地区是必填项，岂能为空？">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">类型</label>
+                            <div class="layui-input-inline">
+                                <select id="select_type" name="select_type" lay-verify="required" lay-search="" lay-reqtext="类型是必填项，岂能为空？">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">类别</label>
+                            <div class="layui-input-inline">
+                                <select id="select_category" name="select_category" lay-verify="required" lay-search="" lay-reqtext=类别是必填项，岂能为空？">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">描述</label>
+                        <div class="layui-input-block">
+                            <textarea  id="intro" placeholder="请输入内容" class="layui-textarea" lay-verify="required" lay-reqtext="多少填点吧.."></textarea>
+                        </div>
+                    </div>
+                    <!-- <div class="layui-form-item layui-form-text">
+                       <label class="layui-form-label">编辑器</label>
+                       <div class="layui-input-block">
+                         <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
+                       </div>
+                     </div>-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">电影资源</label>
+                        <input value=""  type="file" id="path"  class="layui-input"><i class="layui-icon">&#xe67c;</i>点击上传
+           <!--             <button type="button" class="layui-btn" >
+
+                        </button>--><!--
+                        <input value="" hidden id="path_value">-->
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</form>
+
+<div class="layui-trans footer">
+    <p>© 2020 <a href="#" target="_blank">陈少鑫</a></p>
+</div>
+</body>
+<script>
+
+
+
+    //监听提交
+    /*layui.use('form',function () {
+        layui.form.on('submit(assort)', function(data){
+            data = data.field;
+            if (data.assort_type !== "")
+                ajax(videoUrl+'/assort/types',JSON.stringify([{"name":data.assort_type}]),'post',true,false,"application/json",function (res,parma) {
+                    layui.layer.msg("新增成功");
+                },null,null,null);
+            if (data.assort_category !== "")
+                ajax(videoUrl+'/assort/categories',JSON.stringify([{"name":data.assort_category}]),'post',true,false,"application/json",function (res,parma) {
+                    layui.layer.msg("新增成功");
+                },null,null,null);
+            if (data.assort_country !== "")
+                ajax(videoUrl+'/assort/countries',JSON.stringify([{"abbreviation":data.assort_country}]),'post',true,false,"application/json",function (res,parma) {
+                    layui.layer.msg("新增成功");
+                },null,null,null);
+            return false;
+        });
+    });*/
+    function insertAssort() {
+        var assort_type = $("#assort_type").val();
+        var assort_category = $("#assort_category").val();
+        var assort_country = $("#assort_country").val();
+        if (assort_type !== "")
+            ajax(videoUrl + '/assort/types', JSON.stringify([{"name": assort_type}]), 'post', true, false, "application/json", null, null, null, null);
+        if (assort_category !== "")
+            ajax(videoUrl + '/assort/categories', JSON.stringify([{"name": assort_category}]), 'post', true, false, "application/json", null, null, null, null);
+        if (assort_country !== "")
+            ajax(videoUrl + '/assort/countries', JSON.stringify([{"abbreviation": assort_country}]), 'post', true, false, "application/json", null, null, null, null);
+        location.href = location.href;
+    }
+
+    $(function () {
+        setNav();
+        if (null == user) {
+            layui.use('layer', function () {
+                var layer = layui.layer;
+                layer.msg("登陆后才能查阅！即将跳转...", {icon: 2, time: 2000}, function () {
+                    var reUrl = document.referrer;
+                    var url = document.URL;
+                    if (reUrl.startsWith(url.substr(0, url.lastIndexOf(":")))) {
+                        if (reUrl.includes("/html/demo-signIn.html")
+                            || reUrl.includes("/html/my.html")) {
+                            console.log(":" + reUrl);
+                            window.location.href = gatewayUrl + "/html/index.html";
+                        } else {
+                            console.log("+" + reUrl);
+                            window.location.href = reUrl;
+                        }
+                    } else {
+                        console.log("-" + reUrl);
+                        window.location.href = gatewayUrl + "/html/index.html";
+                    }
+                });
+            });
+            return;
+        }
+        setSelect();
+    });
+
+    function setSelect() {
+        $("#select_country").text("");
+        html = "<option value=''>直接选择或搜索选择</option>";
+        for (var [key, value] of countryMap) {
+            html += "<option value='"+key+"'>"+value+"</option>";
+        }
+        $("#select_country").append(html);
+
+        $("#select_category").text("");
+        html = "<option value=''>直接选择或搜索选择</option>";
+        for (var [key, value] of categoryMap) {
+            html += "<option value='"+key+"'>"+value+"</option>";
+        }
+        $("#select_category").append(html);
+
+        $("#select_type").text("");
+        html = "<option value=''>直接选择或搜索选择</option>";
+        for (var [key, value] of typeMap) {
+            html += "<option value='"+key+"'>"+value+"</option>";
+        }
+        $("#select_type").append(html);
+
+        layui.use('form',function () {
+            layui.form.render('select');
+        });
+    }
+
+    //设置子导航条
+    function setNav() {
+        var html = "<a style='font-size: 20px; cursor:pointer' onclick='gotoHome()'>首页</a>";
+        for (var [key, value] of typeMap) {
+            html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoSearch(" + key + ",null,null)'>" + value + "</a>"
+        }
+        html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoRecommend()'>推荐榜单</a>";
+        $('#type_div').append(html);
+        html = "";
+        for (var [key, value] of countryMap) {
+            html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoSearch(null," + key + ",null)'>" + value + "</a>"
+        }
+        $("#country_div").append(html);
+        html = "";
+        for (var [key, value] of categoryMap) {
+            html += "<a style='font-size: 20px; cursor:pointer' onclick='gotoSearch(null,null," + key + ")'>" + value + "</a>"
+        }
+        $("#category_div").append(html);
+    }
+
+    function gotoSearch(tepy, country, category) {
+        if (tepy != null)
+            nowTepy = tepy;
+        if (country != null)
+            nowCountry = country;
+        if (category != null)
+            nowCategory = category;
+        console.log("----gotoSearch----" + $("#searchText").val().trim());
+        var vname = $("#searchText").val().trim();
+        console.log("------search-----" + '/html/search.html?type=' + nowTepy + '&country=' + nowCountry + '&category=' + nowCountry + '&vname=' + vname);
+        location.href = gatewayUrl + '/html/search.html?type=' + nowTepy + '&country=' + nowCountry + '&category=' + nowCountry + '&vname=' + vname;
+    }
+
+    function gotoHome() {
+        nowTepy = null;
+        nowCountry = null;
+        nowCategory = null;
+        location.href = gatewayUrl + '/html/index.html';
+    }
+
+    function gotoRecommend() {
+        nowTepy = null;
+        nowCountry = null;
+        nowCategory = null;
+        location.href = gatewayUrl + '/html/recommend.html';
+    }
+
+    layui.use('element', function () {
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //监听导航点击
+        element.on('nav(demo)', function (elem) {
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+    //上传按钮的监控
+    layui.use('upload', function(){
+        var upload = layui.upload;
+
+        //执行实例
+        var uploadPicture = upload.render({
+            elem: '#picture' //绑定元素
+            ,url: gatewayUrl+'/api/file/upload' //上传接口
+            ,done: function(res){
+                console.log(res)
+            }
+            ,error: function(){
+                console.log("");
+            }
+        });
+        var uploadPath = upload.render({
+            elem: '#path' //绑定元素
+            ,url: gatewayUrl+'/api/file/upload' //上传接口
+            ,done: function(res){
+                console.log(res)
+            }
+            ,error: function(){
+                console.log("");
+            }
+        });
+    });
+
+</script>
+</html>
